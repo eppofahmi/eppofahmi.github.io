@@ -10,4 +10,4 @@ Beberapa jenis analisis yang digunakan dalam catatan ini diantarnya adalah:
 1. Topic modelling umumnya menggunakan library `topicmodels` di R
 2. network analysis - data biasanya dibuat di python dan visualisasinya menggunakan gephi
 
-Beberapa tulisan saya bisa ditemukan [di sini](https://www.researchgate.net/profile/Ujang_Fahmi)
+Beberapa tulisan saya bisa ditemukan [di sini](https://www.researchgate.net/profile/Ujang_Fahmi) silahkan dibaca
