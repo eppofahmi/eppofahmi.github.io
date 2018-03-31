@@ -1,37 +1,13 @@
-## Welcome to GitHub Pages
+## Selamat Datang
 
-You can use the [editor on GitHub](https://github.com/eppofahmi/eppofahmi.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Ini adalah laman percobaan yang saya lakukan untuk mengolah data yang sebagian besar dari twitter dan berupa teks. Tujuannya adalah untuk mendapatkan insight dari data berupa teks.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Beberapa di antarnya saya jadikan paper yang diikut sertakan dalam berbagai konferensi. Berhubung saya sedang kuliah kebijakan publik, sebagian besar tema yang saya angkat juga behubungan dengan kebijakan dan kepublikan. 
 
-### Markdown
+## Jenis analisis
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Beberapa jenis analisis yang digunakan dalam catatan ini diantarnya adalah:
+1. Topic modelling umumnya menggunakan library `topicmodels` di R
+2. network analysis - data biasanya dibuat di python dan visualisasinya menggunakan gephi
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/eppofahmi/eppofahmi.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Beberapa tulisan saya bisa ditemukan [di sini](https://www.researchgate.net/profile/Ujang_Fahmi)
