@@ -2,9 +2,12 @@
 title: "Thesis Note No. 1"
 author: "Ujang Fahmi"
 date: "4/11/2018"
-output: 
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
-    toc: true
+    toc: yes
     toc_depth: 3
 ---
 
