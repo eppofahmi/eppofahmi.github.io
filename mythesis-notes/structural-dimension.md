@@ -3,6 +3,9 @@ Thesis Note No. 1
 Ujang Fahmi
 4/11/2018
 
+-   [R Markdown](#r-markdown)
+-   [Including Plots](#including-plots)
+
 R Markdown
 ----------
 

@@ -2,7 +2,10 @@
 title: "Thesis Note No. 1"
 author: "Ujang Fahmi"
 date: "4/11/2018"
-output: github_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 ```{r setup, include=FALSE}
