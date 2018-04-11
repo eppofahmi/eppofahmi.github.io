@@ -2,29 +2,23 @@
 title: "Dimensi Struktural Ruang publik"
 author: "Ujang Fahmi"
 date: "4/11/2018"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
-## R Markdown
+# Pendahuluan
+Halaman ini merupakan catatan penelitian tentang keberadaan ruang publik di balik sebuah tagar yang digunakan di media sosial. Keberadaan ruang publik di sini diidentifikasi melalui tiga dimensi ruang publik, yaitu: (1) dimensi struktural; (2) dimensi representasional; dan (3) dimensi interaksional. Identifikasi terhadap tiga dimensi tersebut dibagi menjadi di folder. Bagian ini akan berusahan mengidentifikasi, menjelaskan, dan memaknai berbagai aktivitas warga net di Twitter terkait dengan keberadaan tagar #jogjaoradidol di twitter. Berikut adalah pertanyaan yang mencoba dijawab: 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+  > Bagaimana keterlibatan masyarakat dalam penggunaan tagar #jogjaoradidol di Twitter?
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publik, yaitu: (1) inklusif ada kesempatan yang sama untuk terlibat dalam diskuis; (2) bebas dari kepentingan kekuasaan dan ekonomi; dan memungkinkan terbentuknya opini publik. 
