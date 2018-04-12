@@ -21,13 +21,13 @@ Halaman ini merupakan catatan penelitian tentang keberadaan ruang publik di bali
 
   > Bagaimana keterlibatan masyarakat dalam penggunaan tagar #jogjaoradidol di Twitter?
 
-Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publik, yaitu: (1) inklusif ada kesempatan yang sama untuk terlibat dalam diskuis; (2) bebas dari kepentingan kekuasaan dan ekonomi; dan memungkinkan terbentuknya opini publik. 
+Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publik, yaitu: (1) inklusif ada kesempatan yang sama untuk terlibat dalam diskuis; (2) bebas dari kepentingan kekuasaan dan ekonomi; dan (3) memungkinkan terbentuknya opini publik. 
 
 Pembahasan dibagi menjadi beberapa bagian. Pertama, membahas berbagai aktivitas warga net di dalam Twitter. Kedua, membahas berbagai kejadian di dunia nyata yang melatari penggunaan tagar. Ketiga, membahas makna keberadaan tagar sebagai sebuah ruang yang dapat dijadikan tempat untuk mendiskusikan kebijakan.
 
 # Preparation
 
-## Library yang digunakan
+## R Library
 ```{r}
 library(lubridate)
 library(tidyverse)
@@ -63,7 +63,7 @@ raw_jod$ret_count <- as.integer(raw_jod$ret_count)
 raw_jod <- tidyr::replace_na(raw_jod, list(fav_count=0, rep_count=0, ret_count=0))
 ```
 
-## Identitas logical twit sebagai duplicate atau bukan
+## Duplicate or Not
 
 ```{r}
 raw_jod <- raw_jod %>%
@@ -81,28 +81,50 @@ Jumlah twit yang memiliki duplicte = 866
 Jumlah twit yang tidak memiliki duplicte = 12627
 
 ## Pembagian periode
-Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat [di sini](https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf)
+Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat [di sini.](https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf)
 
-1. Fase Emergence: 2013-10-07 to 2013-12-31
-2. Fase Coalescence: 
-3. Fase Bureaucratization:
-4. Fase Decline: 
+1. Fase Emergence: 2013-10-07 sampai 2013-12-31
+2. Fase Coalescence: 2014-01-01 sampai 2014-06-30
+3. Fase Bureaucratization: 2014-07-01 sampai 2014-12-31
+4. Fase Decline: 2015-01-01 sampai 2017-08-30
+
+```{r}
+a <- raw_jod %>% 
+  subset(date >= "2013-10-07" & date <= "2013-12-31" ) %>%
+  mutate(fase = "emergence")
+
+b <- raw_jod %>% 
+  subset(date >= "2014-01-01" & date <= "2014-10-31" ) %>%
+  mutate(fase = "Coalescence")
+
+c <- raw_jod %>% 
+  subset(date >= "2014-11-01" & date <= "2015-10-31" ) %>%
+  mutate(fase = "Bureaucratization")
+
+d <- raw_jod %>% 
+  subset(date >= "2015-11-01" & date <= "2017-08-31" ) %>%
+  mutate(fase = "Decline")
+
+raw_jod <- bind_rows(a, b, c, d)
+rm(a, b, c, d)
+```
+
+**Catatan:** Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom `date` yang kosong. Untuk selanjutnya, berarti jumlah twit yang akan dianalisis sebanya **13492**
+
+## Tweets cleaning
+
+## Count terms per row
+
+## Hashtag per row
+
+## Count of hashtag per row
 
 
-## Menambah kolom untuk teks yang sudah dibersihkan
-
-## Menambah kolom jumlah term per row dari teks yang sudah diberishkan
-
-## Mengekstrak tagar tiap row
-
-## Menghitung jumlah tagar per baris.
+# Konteks dan setting munculnya isu
 
 # Partisipasi Pengguna Tagar
 
+# Pembentukan opini publik: Tagar sebagai tempat diskusi
 
- 
-# Kejadian di dunia nyata seputar #jogjaoradidol
-
-# Tagar sebagai tempat diskusi kebijakan
 
 # Simpulan

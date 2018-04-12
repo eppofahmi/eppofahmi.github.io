@@ -229,13 +229,13 @@ div.tocify {
 <blockquote>
 <p>Bagaimana keterlibatan masyarakat dalam penggunaan tagar #jogjaoradidol di Twitter?</p>
 </blockquote>
-<p>Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publik, yaitu: (1) inklusif ada kesempatan yang sama untuk terlibat dalam diskuis; (2) bebas dari kepentingan kekuasaan dan ekonomi; dan memungkinkan terbentuknya opini publik.</p>
+<p>Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publik, yaitu: (1) inklusif ada kesempatan yang sama untuk terlibat dalam diskuis; (2) bebas dari kepentingan kekuasaan dan ekonomi; dan (3) memungkinkan terbentuknya opini publik.</p>
 <p>Pembahasan dibagi menjadi beberapa bagian. Pertama, membahas berbagai aktivitas warga net di dalam Twitter. Kedua, membahas berbagai kejadian di dunia nyata yang melatari penggunaan tagar. Ketiga, membahas makna keberadaan tagar sebagai sebuah ruang yang dapat dijadikan tempat untuk mendiskusikan kebijakan.</p>
 </div>
 <div id="preparation" class="section level1">
 <h1><span class="header-section-number">2</span> Preparation</h1>
-<div id="library-yang-digunakan" class="section level2">
-<h2><span class="header-section-number">2.1</span> Library yang digunakan</h2>
+<div id="r-library" class="section level2">
+<h2><span class="header-section-number">2.1</span> R Library</h2>
 <pre class="r"><code>library(lubridate)
 library(tidyverse)
 library(tidytext)
@@ -257,8 +257,8 @@ raw_jod$date &lt;- as.Date(raw_jod$date, format = &quot;%Y/%m/%d&quot;)
 raw_jod$ret_count &lt;- as.integer(raw_jod$ret_count)
 raw_jod &lt;- tidyr::replace_na(raw_jod, list(fav_count=0, rep_count=0, ret_count=0))</code></pre>
 </div>
-<div id="identitas-logical-twit-sebagai-duplicate-atau-bukan" class="section level2">
-<h2><span class="header-section-number">2.2</span> Identitas logical twit sebagai duplicate atau bukan</h2>
+<div id="duplicate-or-not" class="section level2">
+<h2><span class="header-section-number">2.2</span> Duplicate or Not</h2>
 <pre class="r"><code>raw_jod &lt;- raw_jod %&gt;%
   dplyr::mutate(is_duplicate = duplicated(tweets))
 jod_dup &lt;- raw_jod %&gt;%
@@ -271,35 +271,54 @@ jod_no_dup &lt;- raw_jod %&gt;%
 </div>
 <div id="pembagian-periode" class="section level2">
 <h2><span class="header-section-number">2.3</span> Pembagian periode</h2>
-<p>Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat <a href="https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf">di sini</a></p>
+<p>Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat <a href="https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf">di sini.</a></p>
 <ol style="list-style-type: decimal">
-<li>Fase Emergence: 2013-10-07 to 2013-12-31</li>
-<li>Fase Coalescence:</li>
-<li>Fase Bureaucratization:</li>
-<li>Fase Decline:</li>
+<li>Fase Emergence: 2013-10-07 sampai 2013-12-31</li>
+<li>Fase Coalescence: 2014-01-01 sampai 2014-06-30</li>
+<li>Fase Bureaucratization: 2014-07-01 sampai 2014-12-31</li>
+<li>Fase Decline: 2015-01-01 sampai 2017-08-30</li>
 </ol>
+<pre class="r"><code>a &lt;- raw_jod %&gt;% 
+  subset(date &gt;= &quot;2013-10-07&quot; &amp; date &lt;= &quot;2013-12-31&quot; ) %&gt;%
+  mutate(fase = &quot;emergence&quot;)
+
+b &lt;- raw_jod %&gt;% 
+  subset(date &gt;= &quot;2014-01-01&quot; &amp; date &lt;= &quot;2014-10-31&quot; ) %&gt;%
+  mutate(fase = &quot;Coalescence&quot;)
+
+c &lt;- raw_jod %&gt;% 
+  subset(date &gt;= &quot;2014-11-01&quot; &amp; date &lt;= &quot;2015-10-31&quot; ) %&gt;%
+  mutate(fase = &quot;Bureaucratization&quot;)
+
+d &lt;- raw_jod %&gt;% 
+  subset(date &gt;= &quot;2015-11-01&quot; &amp; date &lt;= &quot;2017-08-31&quot; ) %&gt;%
+  mutate(fase = &quot;Decline&quot;)
+
+raw_jod &lt;- bind_rows(a, b, c, d)
+rm(a, b, c, d)</code></pre>
+<p><strong>Catatan:</strong> Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom <code>date</code> yang kosong. Untuk selanjutnya, berarti jumlah twit yang akan dianalisis sebanya <strong>13492</strong></p>
 </div>
-<div id="menambah-kolom-untuk-teks-yang-sudah-dibersihkan" class="section level2">
-<h2><span class="header-section-number">2.4</span> Menambah kolom untuk teks yang sudah dibersihkan</h2>
+<div id="tweets-cleaning" class="section level2">
+<h2><span class="header-section-number">2.4</span> Tweets cleaning</h2>
 </div>
-<div id="menambah-kolom-jumlah-term-per-row-dari-teks-yang-sudah-diberishkan" class="section level2">
-<h2><span class="header-section-number">2.5</span> Menambah kolom jumlah term per row dari teks yang sudah diberishkan</h2>
+<div id="count-terms-per-row" class="section level2">
+<h2><span class="header-section-number">2.5</span> Count terms per row</h2>
 </div>
-<div id="mengekstrak-tagar-tiap-row" class="section level2">
-<h2><span class="header-section-number">2.6</span> Mengekstrak tagar tiap row</h2>
+<div id="hashtag-per-row" class="section level2">
+<h2><span class="header-section-number">2.6</span> Hashtag per row</h2>
 </div>
-<div id="menghitung-jumlah-tagar-per-baris." class="section level2">
-<h2><span class="header-section-number">2.7</span> Menghitung jumlah tagar per baris.</h2>
+<div id="count-of-hashtag-per-row" class="section level2">
+<h2><span class="header-section-number">2.7</span> Count of hashtag per row</h2>
 </div>
+</div>
+<div id="konteks-dan-setting-munculnya-isu" class="section level1">
+<h1><span class="header-section-number">3</span> Konteks dan setting munculnya isu</h1>
 </div>
 <div id="partisipasi-pengguna-tagar" class="section level1">
-<h1><span class="header-section-number">3</span> Partisipasi Pengguna Tagar</h1>
+<h1><span class="header-section-number">4</span> Partisipasi Pengguna Tagar</h1>
 </div>
-<div id="kejadian-di-dunia-nyata-seputar-jogjaoradidol" class="section level1">
-<h1><span class="header-section-number">4</span> Kejadian di dunia nyata seputar #jogjaoradidol</h1>
-</div>
-<div id="tagar-sebagai-tempat-diskusi-kebijakan" class="section level1">
-<h1><span class="header-section-number">5</span> Tagar sebagai tempat diskusi kebijakan</h1>
+<div id="pembentukan-opini-publik-tagar-sebagai-tempat-diskusi" class="section level1">
+<h1><span class="header-section-number">5</span> Pembentukan opini publik: Tagar sebagai tempat diskusi</h1>
 </div>
 <div id="simpulan" class="section level1">
 <h1><span class="header-section-number">6</span> Simpulan</h1>
