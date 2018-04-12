@@ -240,9 +240,10 @@ div.tocify {
 library(tidyverse)
 library(tidytext)
 library(stringr)
-library(lubridate)</code></pre>
+library(lubridate)
+library(tm)</code></pre>
 <p>Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada.</p>
-<p>Variabel yang ingin ditambahkan adalah: 1. Identitas logical twit sebagai duplicate atau bukan 2. Membagi data menjadi beberapa kluster berdasarkan tanggal posting 3. Menambah kolom untuk teks yang sudah dibersihkan 4. Menambah kolom jumlah term per row dari teks yang sudah diberishkan 5. Mengekstrak tagar tiap row 6. Menghitung jumlah tagar per baris.</p>
+<p>Variabel yang ingin ditambahkan adalah: 1. Identitas logical twit sebagai duplicate atau bukan 2. Username dan count username 3. Membagi data menjadi beberapa kluster berdasarkan tanggal posting 4. Menambah kolom untuk teks yang sudah dibersihkan 5. Menambah kolom jumlah term per row dari teks yang sudah diberishkan 6. Mengekstrak tagar tiap row 7. Menghitung jumlah tagar per baris.</p>
 <p>Saat ini, data sudah memiliki 10 kolom, oleh dengan rencana diatas maka data akan memiliki 17 kolom.</p>
 <pre class="r"><code># import data
 raw_jod &lt;- read.csv(&quot;hasil-new1.csv&quot;, stringsAsFactors = FALSE, header = FALSE, sep = &quot;,&quot;)
@@ -296,19 +297,93 @@ d &lt;- raw_jod %&gt;%
 
 raw_jod &lt;- bind_rows(a, b, c, d)
 rm(a, b, c, d)</code></pre>
-<p><strong>Catatan:</strong> Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom <code>date</code> yang kosong. Untuk selanjutnya, berarti jumlah twit yang akan dianalisis sebanya <strong>13492</strong></p>
+<p><strong>Catatan:</strong> Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom <code>date</code> yang kosong. Untuk selanjutnya, jumlah twit yang akan dianalisis sebanya <strong>13492</strong>.</p>
+</div>
+<div id="username" class="section level2">
+<h2><span class="header-section-number">2.4</span> Username</h2>
+<p>Script berikut ini membuat dua buah kolom yang berisi daftar username yang diambil dari kolom username dan tweets. Kolom lainnya merupakan jumlah username per baris yang menunjukkan jumlah username yang terlibat dalam sebuah twit.</p>
+<pre class="r"><code># menambah @ pada kolom username
+raw_jod$username &lt;- paste(&quot;@&quot;, raw_jod$username, sep=&quot;&quot;)
+
+# menggabungkan kolom username dengan tweet
+raw_jod$user_all &lt;- paste(raw_jod$username, raw_jod$tweets, sep=&quot; &quot;)
+
+# mengekstrak username dari kolom hasil gabungan di atas 
+raw_jod$user_all &lt;- sapply(str_extract_all(raw_jod$user_all, &quot;@\\S+&quot;, simplify = FALSE), paste, collapse=&quot; &quot;)
+
+# merenggangkan tanda : setelah username 
+raw_jod$user_all &lt;- gsub(&quot;:&quot;, &quot; \\1 &quot;, raw_jod$user_all, perl=T)
+
+raw_jod$user_count &lt;- sapply(raw_jod$user_all, function(x) length(unlist(strsplit(as.character(x), &quot;@\\S+&quot;))))</code></pre>
 </div>
 <div id="tweets-cleaning" class="section level2">
-<h2><span class="header-section-number">2.4</span> Tweets cleaning</h2>
-</div>
-<div id="count-terms-per-row" class="section level2">
-<h2><span class="header-section-number">2.5</span> Count terms per row</h2>
+<h2><span class="header-section-number">2.5</span> Tweets cleaning</h2>
+<p>Script berikut ini digunakan untuk membuat kolom twit yang sudah dibersihkan dari:</p>
+<ol style="list-style-type: decimal">
+<li>Username</li>
+<li>Tagar</li>
+<li>Urls</li>
+<li>Stopwords bahasa Indonesia</li>
+<li>Term yang dipilih untuk dihilangkan, yaitu term yang tidak dapat diartikan atau kurang relevan dalam upaya mejawab pertanyaan penelitian.</li>
+</ol>
+<p>Selain itu, script di bawah ini juga membuat kolom baru yang berisi jumlah term per kolom. Kolom baru ini selanjutnya akan digunakan sebagai parameter utama untuk membuat data input untuk lDA.</p>
+<pre class="r"><code># fungsi untuk cleaning 
+tweet_cleaner &lt;- function(input_text) # nama kolom yang akan dibersihkan
+{    
+  # create a corpus (type of object expected by tm) and document term matrix
+  corpusku &lt;- Corpus(VectorSource(input_text)) # make a corpus object
+  # remove urls1
+  removeURL1 &lt;- function(x) gsub(&quot;http[^[:space:]]*&quot;, &quot;&quot;, x) 
+  corpusku &lt;- tm_map(corpusku, content_transformer(removeURL1))
+  #remove urls3
+  removeURL2 &lt;- function(x) gsub(&quot;pic[^[:space:]]*&quot;, &quot;&quot;, x) 
+  corpusku &lt;- tm_map(corpusku, content_transformer(removeURL2))
+  #remove username 
+  TrimUsers &lt;- function(x) {
+    str_replace_all(x, '(@[[:alnum:]_]*)', '')
+  }
+  corpusku &lt;- tm_map(corpusku, TrimUsers)
+  #remove all &quot;#Hashtag1&quot;
+  removehashtag &lt;- function(x) gsub(&quot;#\\w+&quot;, &quot;&quot;, x)
+  corpusku &lt;- tm_map(corpusku, content_transformer(removehashtag))
+  #merenggangkan tanda baca
+  tandabaca1 &lt;- function(x) gsub(&quot;((?:\b| )?([.,:;!?()]+)(?: |\b)?)&quot;, &quot; \\1 &quot;, x, perl=T)
+  corpusku &lt;- tm_map(corpusku, content_transformer(tandabaca1))
+  #remove puntuation
+  removeNumPunct &lt;- function(x) gsub(&quot;[^[:alpha:][:space:]]*&quot;, &quot;&quot;, x) # kecuali - dan '
+  corpusku &lt;- tm_map(corpusku, content_transformer(removeNumPunct))
+  corpusku &lt;- tm_map(corpusku, stripWhitespace)
+  corpusku &lt;- tm_map(corpusku, content_transformer(tolower)) 
+  #stopwords bahasa indonesia
+  stopwords &lt;- read.csv(&quot;stopwords_indo.csv&quot;, header = FALSE)
+  stopwords &lt;- as.character(stopwords$V1)
+  stopwords &lt;- c(stopwords, stopwords())
+  corpusku &lt;- tm_map(corpusku, removeWords, stopwords)
+  #kata khusus yang dihapus
+  corpusku &lt;- tm_map(corpusku, removeWords, c(&quot;rt&quot;, &quot;ini&quot;, &quot;jogja&quot;, &quot;jogjaoradidol&quot;, &quot;via&quot;,&quot;yg&quot;, &quot;tdk&quot;, &quot;=&quot;, &quot;ngundang&quot;, &quot;jogja&quot;, &quot;ora&quot;, &quot;didol&quot;, &quot;yo&quot;, &quot;ya&quot;, &quot;ra&quot;, &quot;aaaa&quot;, &quot;yogyakarta&quot;, &quot;oke&quot;, &quot;hape&quot;, &quot;dg&quot;, &quot;sms&quot;, &quot;order&quot;, &quot;tees&quot;, &quot;k&quot;, &quot;jan&quot;, &quot;tau&quot;, &quot;min&quot;, &quot;selamat&quot;, &quot;pagi&quot;, &quot;idr&quot;, &quot;dp&quot;, &quot;utk&quot;, &quot;mas&quot;, &quot;byk&quot;, &quot;krn&quot;, &quot;adl&quot;, &quot;sbg&quot;, &quot;dr&quot;, &quot;td&quot;, &quot;dlm&quot;, &quot;jd&quot;, &quot;ovj&quot;, &quot;yogya&quot;, &quot;vers&quot;, &quot;cc&quot;, &quot;aaaaakkk&quot;, &quot;iki&quot;, &quot;hhaha&quot;, &quot;v&quot;, &quot;d&quot;, &quot;oi&quot;, &quot;yossiku&quot;, &quot;hahaha&quot;, &quot;sep&quot;, &quot;y&quot;, &quot;p&quot;, &quot;suuuuuu&quot;, &quot;ah&quot;, &quot;n&quot;, &quot;s&quot;, &quot;d&quot;, &quot;e&quot;, &quot;xrzlx&quot;, &quot;iyaa&quot;, &quot;loh&quot;, &quot;cont&quot;, &quot;si&quot;, &quot;wkwk&quot;, &quot;hehe&quot;, &quot;l&quot;, &quot;sy&quot;, &quot;eciyeee&quot;, &quot;nahh&quot;, &quot;asoooyyyyyy&quot;, &quot;xxxxxxx&quot;, &quot;ih&quot;, &quot;lik&quot;, &quot;hahahaha&quot;, &quot;yoezznart&quot;, &quot;kae&quot;, &quot;o&quot;, &quot;bzzzzzzzzzzzzz&quot;, &quot;hahha&quot;, &quot;eaaaaah&quot;, &quot;eaaah&quot;, &quot;hmm&quot;, &quot;uwiiiihhh&quot;, &quot;nahh&quot;, &quot;yk&quot;, &quot;j&quot;, &quot;g&quot;, &quot;ooopppssss&quot;, &quot;yosuaapratama&quot;, &quot;wkwkkkk&quot;, &quot;b&quot;, &quot;t&quot;))
+  corpusku &lt;- tm_map(corpusku, stripWhitespace)
+  #removing white space in the begining
+  rem_spc_front &lt;- function(x) gsub(&quot;^[[:space:]]+&quot;, &quot;&quot;, x)
+  corpusku &lt;- tm_map(corpusku, content_transformer(rem_spc_front))
+
+  #removing white space at the end
+  rem_spc_back &lt;- function(x) gsub(&quot;[[:space:]]+$&quot;, &quot;&quot;, x)
+  corpusku &lt;- tm_map(corpusku, content_transformer(rem_spc_back))
+  data &lt;- data.frame(clean_text=sapply(corpusku, identity),stringsAsFactors=F)
+}</code></pre>
+<p>Menjalankan fungsi cleaner pada kolom <code>tweets</code></p>
+<pre class="r"><code>jod_clean &lt;- tweet_cleaner(raw_jod$tweets)
+jod_clean$word_count &lt;- sapply(jod_clean$clean_text, function(x) length(unlist(strsplit(as.character(x), &quot;\\W+&quot;))))</code></pre>
+<p>Menggabungkan hasil cleaning dengan data awal</p>
+<pre class="r"><code>raw_jod &lt;- bind_cols(raw_jod, jod_clean)
+rm(jod_clean)
+
+# deleting multiple column
+#raw_jod = raw_jod[,-c(16,17)]</code></pre>
 </div>
 <div id="hashtag-per-row" class="section level2">
 <h2><span class="header-section-number">2.6</span> Hashtag per row</h2>
-</div>
-<div id="count-of-hashtag-per-row" class="section level2">
-<h2><span class="header-section-number">2.7</span> Count of hashtag per row</h2>
+<pre class="r"><code>raw_jod = raw_jod[,-c(16,17)]</code></pre>
 </div>
 </div>
 <div id="konteks-dan-setting-munculnya-isu" class="section level1">

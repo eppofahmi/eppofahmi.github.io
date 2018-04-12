@@ -34,17 +34,19 @@ library(tidyverse)
 library(tidytext)
 library(stringr)
 library(lubridate)
+library(tm)
 ```
 
 Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada. 
 
 Variabel yang ingin ditambahkan adalah:
 1. Identitas logical twit sebagai duplicate atau bukan
-2. Membagi data menjadi beberapa kluster berdasarkan tanggal posting
-3. Menambah kolom untuk teks yang sudah dibersihkan
-4. Menambah kolom jumlah term per row dari teks yang sudah diberishkan
-5. Mengekstrak tagar tiap row
-6. Menghitung jumlah tagar per baris. 
+2. Username dan count username
+3. Membagi data menjadi beberapa kluster berdasarkan tanggal posting
+4. Menambah kolom untuk teks yang sudah dibersihkan
+5. Menambah kolom jumlah term per row dari teks yang sudah diberishkan
+6. Mengekstrak tagar tiap row
+7. Menghitung jumlah tagar per baris. 
 
 Saat ini, data sudah memiliki 10 kolom, oleh dengan rencana diatas maka data akan memiliki 17 kolom. 
 
@@ -109,15 +111,108 @@ raw_jod <- bind_rows(a, b, c, d)
 rm(a, b, c, d)
 ```
 
-**Catatan:** Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom `date` yang kosong. Untuk selanjutnya, berarti jumlah twit yang akan dianalisis sebanya **13492**
+**Catatan:** Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom `date` yang kosong. Untuk selanjutnya, jumlah twit yang akan dianalisis sebanya **13492**.
+
+## Username 
+Script berikut ini membuat dua buah kolom yang berisi daftar username yang diambil dari kolom username dan tweets. Kolom lainnya merupakan jumlah username per baris yang menunjukkan jumlah username yang terlibat dalam sebuah twit. 
+
+```{r}
+# menambah @ pada kolom username
+raw_jod$username <- paste("@", raw_jod$username, sep="")
+
+# menggabungkan kolom username dengan tweet
+raw_jod$user_all <- paste(raw_jod$username, raw_jod$tweets, sep=" ")
+
+# mengekstrak username dari kolom hasil gabungan di atas 
+raw_jod$user_all <- sapply(str_extract_all(raw_jod$user_all, "@\\S+", simplify = FALSE), paste, collapse=" ")
+
+# merenggangkan tanda : setelah username 
+raw_jod$user_all <- gsub(":", " \\1 ", raw_jod$user_all, perl=T)
+
+raw_jod$user_count <- sapply(raw_jod$user_all, function(x) length(unlist(strsplit(as.character(x), "@\\S+"))))
+```
 
 ## Tweets cleaning
+Script berikut ini digunakan untuk membuat kolom twit yang sudah dibersihkan dari:
 
-## Count terms per row
+1. Username
+2. Tagar
+3. Urls 
+4. Stopwords bahasa Indonesia
+5. Term yang dipilih untuk dihilangkan, yaitu term yang tidak dapat diartikan atau kurang relevan dalam upaya mejawab pertanyaan penelitian. 
+
+Selain itu, script di bawah ini juga membuat kolom baru yang berisi jumlah term per kolom. Kolom baru ini selanjutnya akan digunakan sebagai parameter utama untuk membuat data input untuk lDA. 
+
+```{r}
+# fungsi untuk cleaning 
+tweet_cleaner <- function(input_text) # nama kolom yang akan dibersihkan
+{    
+  # create a corpus (type of object expected by tm) and document term matrix
+  corpusku <- Corpus(VectorSource(input_text)) # make a corpus object
+  # remove urls1
+  removeURL1 <- function(x) gsub("http[^[:space:]]*", "", x) 
+  corpusku <- tm_map(corpusku, content_transformer(removeURL1))
+  #remove urls3
+  removeURL2 <- function(x) gsub("pic[^[:space:]]*", "", x) 
+  corpusku <- tm_map(corpusku, content_transformer(removeURL2))
+  #remove username 
+  TrimUsers <- function(x) {
+    str_replace_all(x, '(@[[:alnum:]_]*)', '')
+  }
+  corpusku <- tm_map(corpusku, TrimUsers)
+  #remove all "#Hashtag1"
+  removehashtag <- function(x) gsub("#\\w+", "", x)
+  corpusku <- tm_map(corpusku, content_transformer(removehashtag))
+  #merenggangkan tanda baca
+  tandabaca1 <- function(x) gsub("((?:\b| )?([.,:;!?()]+)(?: |\b)?)", " \\1 ", x, perl=T)
+  corpusku <- tm_map(corpusku, content_transformer(tandabaca1))
+  #remove puntuation
+  removeNumPunct <- function(x) gsub("[^[:alpha:][:space:]]*", "", x) # kecuali - dan '
+  corpusku <- tm_map(corpusku, content_transformer(removeNumPunct))
+  corpusku <- tm_map(corpusku, stripWhitespace)
+  corpusku <- tm_map(corpusku, content_transformer(tolower)) 
+  #stopwords bahasa indonesia
+  stopwords <- read.csv("stopwords_indo.csv", header = FALSE)
+  stopwords <- as.character(stopwords$V1)
+  stopwords <- c(stopwords, stopwords())
+  corpusku <- tm_map(corpusku, removeWords, stopwords)
+  #kata khusus yang dihapus
+  corpusku <- tm_map(corpusku, removeWords, c("rt", "ini", "jogja", "jogjaoradidol", "via","yg", "tdk", "=", "ngundang", "jogja", "ora", "didol", "yo", "ya", "ra", "aaaa", "yogyakarta", "oke", "hape", "dg", "sms", "order", "tees", "k", "jan", "tau", "min", "selamat", "pagi", "idr", "dp", "utk", "mas", "byk", "krn", "adl", "sbg", "dr", "td", "dlm", "jd", "ovj", "yogya", "vers", "cc", "aaaaakkk", "iki", "hhaha", "v", "d", "oi", "yossiku", "hahaha", "sep", "y", "p", "suuuuuu", "ah", "n", "s", "d", "e", "xrzlx", "iyaa", "loh", "cont", "si", "wkwk", "hehe", "l", "sy", "eciyeee", "nahh", "asoooyyyyyy", "xxxxxxx", "ih", "lik", "hahahaha", "yoezznart", "kae", "o", "bzzzzzzzzzzzzz", "hahha", "eaaaaah", "eaaah", "hmm", "uwiiiihhh", "nahh", "yk", "j", "g", "ooopppssss", "yosuaapratama", "wkwkkkk", "b", "t"))
+  corpusku <- tm_map(corpusku, stripWhitespace)
+  #removing white space in the begining
+  rem_spc_front <- function(x) gsub("^[[:space:]]+", "", x)
+  corpusku <- tm_map(corpusku, content_transformer(rem_spc_front))
+
+  #removing white space at the end
+  rem_spc_back <- function(x) gsub("[[:space:]]+$", "", x)
+  corpusku <- tm_map(corpusku, content_transformer(rem_spc_back))
+  data <- data.frame(clean_text=sapply(corpusku, identity),stringsAsFactors=F)
+}
+```
+
+Menjalankan fungsi cleaner pada kolom `tweets`
+
+```{r}
+jod_clean <- tweet_cleaner(raw_jod$tweets)
+jod_clean$word_count <- sapply(jod_clean$clean_text, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
+```
+
+Menggabungkan hasil cleaning dengan data awal
+
+```{r}
+raw_jod <- bind_cols(raw_jod, jod_clean)
+rm(jod_clean)
+
+# deleting multiple column
+#raw_jod = raw_jod[,-c(16,17)]
+```
+
 
 ## Hashtag per row
 
-## Count of hashtag per row
+```{r}
+raw_jod = raw_jod[,-c(16,17)]
+```
 
 
 # Konteks dan setting munculnya isu
