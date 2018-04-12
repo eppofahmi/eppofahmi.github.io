@@ -27,8 +27,8 @@ Pembahasan dibagi menjadi beberapa bagian. Pertama, membahas berbagai aktivitas 
 
 # Preparation
 
+## Library yang digunakan
 ```{r}
-library(data.table)
 library(lubridate)
 library(tidyverse)
 library(tidytext)
@@ -36,13 +36,69 @@ library(stringr)
 library(lubridate)
 ```
 
+Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada. 
+
+Variabel yang ingin ditambahkan adalah:
+1. Identitas logical twit sebagai duplicate atau bukan
+2. Membagi data menjadi beberapa kluster berdasarkan tanggal posting
+3. Menambah kolom untuk teks yang sudah dibersihkan
+4. Menambah kolom jumlah term per row dari teks yang sudah diberishkan
+5. Mengekstrak tagar tiap row
+6. Menghitung jumlah tagar per baris. 
+
+Saat ini, data sudah memiliki 10 kolom, oleh dengan rencana diatas maka data akan memiliki 17 kolom. 
+
+```{r}
+# import data
+raw_jod <- read.csv("hasil-new1.csv", stringsAsFactors = FALSE, header = FALSE, sep = ",")
+nama_kolom1 <- c("date", "time", "username", "tweets", "replying", "rep_count", "ret_count", "fav_count", "link")
+colnames(raw_jod) <- nama_kolom1
+
+# transform date format
+raw_jod$date <- as.Date(raw_jod$date, format = "%Y/%m/%d")
+
+#raw_jod$time <- hms(raw_jod$time, roll = FALSE, quiet = FALSE)
+# tranform NA to 0 in fav_count, rep_count, and ret_count
+raw_jod$ret_count <- as.integer(raw_jod$ret_count)
+raw_jod <- tidyr::replace_na(raw_jod, list(fav_count=0, rep_count=0, ret_count=0))
+```
+
+## Identitas logical twit sebagai duplicate atau bukan
+
+```{r}
+raw_jod <- raw_jod %>%
+  dplyr::mutate(is_duplicate = duplicated(tweets))
+jod_dup <- raw_jod %>%
+  filter(is_duplicate == TRUE)
+jod_no_dup <- raw_jod %>%
+  filter(is_duplicate == FALSE)
+```
+
+Jumlah total twit = 13493
+
+Jumlah twit yang memiliki duplicte = 866
+
+Jumlah twit yang tidak memiliki duplicte = 12627
+
+## Pembagian periode
+Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat [di sini](https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf)
+
+1. Fase Emergence: 2013-10-07 to 2013-12-31
+2. Fase Coalescence: 
+3. Fase Bureaucratization:
+4. Fase Decline: 
+
+
+## Menambah kolom untuk teks yang sudah dibersihkan
+
+## Menambah kolom jumlah term per row dari teks yang sudah diberishkan
+
+## Mengekstrak tagar tiap row
+
+## Menghitung jumlah tagar per baris.
 
 # Partisipasi Pengguna Tagar
 
-```{r}
-library(data.table)
-raw_jod <- as.data.frame(fread("wr_jod.tsv"))
-```
 
  
 # Kejadian di dunia nyata seputar #jogjaoradidol

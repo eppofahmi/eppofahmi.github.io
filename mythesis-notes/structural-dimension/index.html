@@ -234,17 +234,66 @@ div.tocify {
 </div>
 <div id="preparation" class="section level1">
 <h1><span class="header-section-number">2</span> Preparation</h1>
-<pre class="r"><code>library(data.table)
-library(lubridate)
+<div id="library-yang-digunakan" class="section level2">
+<h2><span class="header-section-number">2.1</span> Library yang digunakan</h2>
+<pre class="r"><code>library(lubridate)
 library(tidyverse)
 library(tidytext)
 library(stringr)
 library(lubridate)</code></pre>
+<p>Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada.</p>
+<p>Variabel yang ingin ditambahkan adalah: 1. Identitas logical twit sebagai duplicate atau bukan 2. Membagi data menjadi beberapa kluster berdasarkan tanggal posting 3. Menambah kolom untuk teks yang sudah dibersihkan 4. Menambah kolom jumlah term per row dari teks yang sudah diberishkan 5. Mengekstrak tagar tiap row 6. Menghitung jumlah tagar per baris.</p>
+<p>Saat ini, data sudah memiliki 10 kolom, oleh dengan rencana diatas maka data akan memiliki 17 kolom.</p>
+<pre class="r"><code># import data
+raw_jod &lt;- read.csv(&quot;hasil-new1.csv&quot;, stringsAsFactors = FALSE, header = FALSE, sep = &quot;,&quot;)
+nama_kolom1 &lt;- c(&quot;date&quot;, &quot;time&quot;, &quot;username&quot;, &quot;tweets&quot;, &quot;replying&quot;, &quot;rep_count&quot;, &quot;ret_count&quot;, &quot;fav_count&quot;, &quot;link&quot;)
+colnames(raw_jod) &lt;- nama_kolom1
+
+# transform date format
+raw_jod$date &lt;- as.Date(raw_jod$date, format = &quot;%Y/%m/%d&quot;)
+
+#raw_jod$time &lt;- hms(raw_jod$time, roll = FALSE, quiet = FALSE)
+# tranform NA to 0 in fav_count, rep_count, and ret_count
+raw_jod$ret_count &lt;- as.integer(raw_jod$ret_count)
+raw_jod &lt;- tidyr::replace_na(raw_jod, list(fav_count=0, rep_count=0, ret_count=0))</code></pre>
+</div>
+<div id="identitas-logical-twit-sebagai-duplicate-atau-bukan" class="section level2">
+<h2><span class="header-section-number">2.2</span> Identitas logical twit sebagai duplicate atau bukan</h2>
+<pre class="r"><code>raw_jod &lt;- raw_jod %&gt;%
+  dplyr::mutate(is_duplicate = duplicated(tweets))
+jod_dup &lt;- raw_jod %&gt;%
+  filter(is_duplicate == TRUE)
+jod_no_dup &lt;- raw_jod %&gt;%
+  filter(is_duplicate == FALSE)</code></pre>
+<p>Jumlah total twit = 13493</p>
+<p>Jumlah twit yang memiliki duplicte = 866</p>
+<p>Jumlah twit yang tidak memiliki duplicte = 12627</p>
+</div>
+<div id="pembagian-periode" class="section level2">
+<h2><span class="header-section-number">2.3</span> Pembagian periode</h2>
+<p>Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa periode berdasarkan tahapan perkembangan sebuah gerakan sosial. Salah satu referensi dapat dilihat <a href="https://www.ebscohost.com/uploads/imported/thisTopic-dbTopic-1248.pdf">di sini</a></p>
+<ol style="list-style-type: decimal">
+<li>Fase Emergence: 2013-10-07 to 2013-12-31</li>
+<li>Fase Coalescence:</li>
+<li>Fase Bureaucratization:</li>
+<li>Fase Decline:</li>
+</ol>
+</div>
+<div id="menambah-kolom-untuk-teks-yang-sudah-dibersihkan" class="section level2">
+<h2><span class="header-section-number">2.4</span> Menambah kolom untuk teks yang sudah dibersihkan</h2>
+</div>
+<div id="menambah-kolom-jumlah-term-per-row-dari-teks-yang-sudah-diberishkan" class="section level2">
+<h2><span class="header-section-number">2.5</span> Menambah kolom jumlah term per row dari teks yang sudah diberishkan</h2>
+</div>
+<div id="mengekstrak-tagar-tiap-row" class="section level2">
+<h2><span class="header-section-number">2.6</span> Mengekstrak tagar tiap row</h2>
+</div>
+<div id="menghitung-jumlah-tagar-per-baris." class="section level2">
+<h2><span class="header-section-number">2.7</span> Menghitung jumlah tagar per baris.</h2>
+</div>
 </div>
 <div id="partisipasi-pengguna-tagar" class="section level1">
 <h1><span class="header-section-number">3</span> Partisipasi Pengguna Tagar</h1>
-<pre class="r"><code>library(data.table)
-raw_jod &lt;- as.data.frame(fread(&quot;wr_jod.tsv&quot;))</code></pre>
 </div>
 <div id="kejadian-di-dunia-nyata-seputar-jogjaoradidol" class="section level1">
 <h1><span class="header-section-number">4</span> Kejadian di dunia nyata seputar #jogjaoradidol</h1>
