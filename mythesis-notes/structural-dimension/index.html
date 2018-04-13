@@ -390,8 +390,8 @@ raw_jod$hashtag &lt;- sapply(str_extract_all(raw_jod$tweets, &quot;#\\S+&quot;, 
 raw_jod$tag_count &lt;- sapply(raw_jod$hashtag, function(x) length(unlist(strsplit(as.character(x), &quot;@\\S+&quot;))))</code></pre>
 </div>
 </div>
-<div id="analsis" class="section level1">
-<h1><span class="header-section-number">3</span> Analsis</h1>
+<div id="analisis" class="section level1">
+<h1><span class="header-section-number">3</span> Analisis</h1>
 <p>Untuk mendapatkan tilikan, saya coba petakan terlebih dahulu tagar-tagar yang digunakan dalam twit dan melihat 10 tagar dengan frekuensi tertinggi berkembang dalam setiap fase gerakan.</p>
 <p><strong>tagar</strong></p>
 <pre class="r"><code>tagar &lt;- raw_jod %&gt;%

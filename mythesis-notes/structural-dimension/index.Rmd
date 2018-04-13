@@ -218,7 +218,7 @@ raw_jod$hashtag <- sapply(str_extract_all(raw_jod$tweets, "#\\S+", simplify = FA
 raw_jod$tag_count <- sapply(raw_jod$hashtag, function(x) length(unlist(strsplit(as.character(x), "@\\S+"))))
 ```
 
-# Analsis
+# Analisis
 Untuk mendapatkan tilikan, saya coba petakan terlebih dahulu tagar-tagar yang digunakan dalam twit dan melihat 10 tagar dengan frekuensi tertinggi berkembang dalam setiap fase gerakan. 
 
 **tagar**
