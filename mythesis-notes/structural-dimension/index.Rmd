@@ -329,7 +329,7 @@ fase1_dist <- raw_jod %>%
 
 ggplot(fase1_dist, aes(x = date, y = n)) + 
   geom_line() + 
-  ggtitle("Tagar paling sering digunakan") +
+  ggtitle("Distribusi twit pada fase Emergence") +
   labs(x = NULL, 
        y = NULL)
 ```
