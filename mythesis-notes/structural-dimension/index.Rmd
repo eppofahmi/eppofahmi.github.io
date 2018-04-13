@@ -35,6 +35,8 @@ library(tidytext)
 library(stringr)
 library(lubridate)
 library(tm)
+library(reshape2)
+library(scales)
 ```
 
 Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada. 
@@ -91,24 +93,23 @@ Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa period
 4. Fase Decline: 2015-01-01 sampai 2017-08-30
 
 ```{r}
-a <- raw_jod %>% 
+fase1 <- raw_jod %>% 
   subset(date >= "2013-10-07" & date <= "2013-12-31" ) %>%
   mutate(fase = "1_Emergence")
 
-b <- raw_jod %>% 
+fase2 <- raw_jod %>% 
   subset(date >= "2014-01-01" & date <= "2014-10-31" ) %>%
   mutate(fase = "2_Coalescence")
 
-c <- raw_jod %>% 
+fase3 <- raw_jod %>% 
   subset(date >= "2014-11-01" & date <= "2015-10-31" ) %>%
   mutate(fase = "3_Bureaucratization")
 
-d <- raw_jod %>% 
+fase4 <- raw_jod %>% 
   subset(date >= "2015-11-01" & date <= "2017-08-31" ) %>%
   mutate(fase = "4_Decline")
 
-raw_jod <- bind_rows(a, b, c, d)
-rm(a, b, c, d)
+raw_jod <- bind_rows(fase1, fase2, fase3, fase4)
 ```
 
 **Catatan:** Ada satu row yang hilang, padahal parameter tanggal sudah sesuai dengan rentang waktu. Kemungkinannya, ada salah satu row di kolom `date` yang kosong. Untuk selanjutnya, jumlah twit yang akan dianalisis sebanya **13492**.
@@ -143,7 +144,7 @@ Script berikut ini digunakan untuk membuat kolom twit yang sudah dibersihkan dar
 
 Selain itu, script di bawah ini juga membuat kolom baru yang berisi jumlah term per kolom. Kolom baru ini selanjutnya akan digunakan sebagai parameter utama untuk membuat data input untuk lDA. 
 
-```{r}
+```{r, echo=FALSE}
 # fungsi untuk cleaning 
 tweet_cleaner <- function(input_text) # nama kolom yang akan dibersihkan
 {    
@@ -234,7 +235,7 @@ tagar <- raw_jod %>%
 tagar %>%
   arrange(desc(n)) %>%
   top_n(20) %>%
-  ggplot(aes(x = reorder(hashtag, n), y = n, fill = "fase")) +
+  ggplot(aes(x = reorder(hashtag, n), y = n, fill = factor(fase))) +
   geom_col(show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~fase) +
@@ -261,7 +262,7 @@ user_terlibat <- raw_jod %>%
 user_terlibat %>%
   arrange(desc(n)) %>%
   top_n(10) %>%
-  ggplot(aes(x = reorder(user_all, n), y = n, fill = "fase")) +
+  ggplot(aes(x = reorder(user_all, n), y = n, fill = factor(fase))) +
   geom_col(show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~fase) +
@@ -277,12 +278,80 @@ Idealnya ini bisa dipetakan setelah partisipasi warga net diketahui. Tapi untuk 
 
 ## Partisipasi Pengguna Tagar
 
-1. jumlah twit per hari
-2. jumlah user per hari
-3. jumlah fav, ret, dan fav
+1. Distribusi twit
+2. Distribusi user
+3. Distribusi fav, ret, dan fav
+
+```{r}
+partisipasi <- raw_jod[,c("date", "fav_count", "rep_count", "ret_count", "user_count")]
+df1 <- partisipasi %>%
+  count(date)
+df2 <- partisipasi %>% 
+  group_by(date) %>% 
+  summarise_all(sum)
+
+jod_dist <- as.data.frame(bind_cols(df1, df2))
+jod_dist <- jod_dist %>%
+  select(date, fav_count, rep_count, ret_count, user_count, tweet_count = n)
+```
+
+**plot partisipasi**
+
+```{r}
+# melt the data for ggplot using `reshape2`
+jod_dist <- melt(jod_dist, id = "date")
+
+# ploting to goem_line ggplot2
+ggplot(data=jod_dist, aes(x=date, y=value, colour=variable)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(labels = date_format("%Y-%m"), 
+               breaks = date_breaks("5 months")) +
+  facet_grid(variable~., scales="free") +
+  theme(legend.position="top")
+```
+
+Apa itu? itu adalah distribusi pengguna, twit, dan aktivitas lainnya selama 1081 hari dari 07-10-2010 sampai 30-08-2017. Jika mengacu pada pembagian periode, di mana data dibagi menjadi empat, maka orang lebih banyak menggunakan tagar pada fase Emergence (mulai 2013-10-07) hingga fase Bureaucratization (berakhir pada 2014-12-31). Setelah itu, partisipasi warga net dalam penggunaan tagar mengalami penurunan.
+
+Hal apa saja yang melatari partisipasi seperti yang ditunjukkan plot di atas? atau ada saja dibali distribusi di atas?
+
+Untuk mendapatkan tilikan dan jawaban pertanyaan di atas, saya mengambil twit dari tanggal-tanggal, di mana orang cenderung lebih sering menggunakan tagar. Di sini, tangal tersebut diambil berdasarkan frekuensi twit yang melebih rerata per fase.  
+
+**Rerata twit secara umum = 12 twit per hari**
+
+### Fase 1 - Emergency
+
+```{r}
+fase1_dist <- raw_jod %>%
+  filter(fase == "1_Emergence") %>%
+  select(date) %>%
+  group_by(date) %>%
+  count(date)
+
+ggplot(fase1_dist, aes(x = date, y = n)) + 
+  geom_line() + 
+  ggtitle("Tagar paling sering digunakan") +
+  labs(x = NULL, 
+       y = NULL)
+```
+
+**Rerata fase1 = 58 twit per hari**
+
+```{r}
+fase1_dist %>%
+  filter(n > 58) %>%
+  dplyr::arrange(desc(date)) %>%
+  ggplot(aes(x = as.character(date), y = n)) + 
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(x = NULL, 
+       y = "Tanggal ketika tagar lebih sering digunakan")
+```
+
+Terdapat 14 hari di mana tagar pada fase 1 lebih sering digunakan. 13 hari diantaranya berasal secara berutan dari tanggal 09 oktober 2013 hingga 21 oktober 2013. Sementara satu lainya dari tanggal 15 November 2013. 
+
 
 
 
 ## Pembentukan opini publik: Tagar sebagai tempat diskusi
 
-## Simpulan
+# Simpulan
