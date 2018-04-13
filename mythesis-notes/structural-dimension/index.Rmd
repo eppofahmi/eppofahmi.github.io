@@ -2,13 +2,29 @@
 title: "Dimensi Struktural Ruang publik"
 author: "Ujang Fahmi"
 date: "4/11/2018"
-output: 
+output:
   html_document:
-    toc: true
+    number_sections: yes
+    toc: yes
     toc_depth: 3
-    toc_float: true
-    number_sections: true
+    toc_float: yes
+    includes:
+      after_body: footer.Rhtml
+  word_document:
+    toc: yes
+    toc_depth: '3'
 ---
+
+<style>
+p.caption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;  
+  text-align: central;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -219,11 +235,13 @@ raw_jod$hashtag <- sapply(str_extract_all(raw_jod$tweets, "#\\S+", simplify = FA
 raw_jod$tag_count <- sapply(raw_jod$hashtag, function(x) length(unlist(strsplit(as.character(x), "@\\S+"))))
 ```
 
+***
+
 # Analisis
 Untuk mendapatkan tilikan, saya coba petakan terlebih dahulu tagar-tagar yang digunakan dalam twit dan melihat 10 tagar dengan frekuensi tertinggi berkembang dalam setiap fase gerakan. 
 
 **tagar**
-```{r}
+```{r tagar, fig.cap="Figure 1: Tagar paling sering digunakan", fig.align='center'}
 tagar <- raw_jod %>%
   group_by(fase) %>%
   unnest_tokens(hashtag, hashtag, to_lower = FALSE) %>%
@@ -239,7 +257,6 @@ tagar %>%
   geom_col(show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~fase) +
-  ggtitle("Tagar paling sering digunakan") +
   labs(x = "Tagar", 
        y = "Frekuensi")
 ```
@@ -251,7 +268,8 @@ tagar %>%
 
 **user all**
 **Pertanyaan:** Apakah aktornya juga berkembang? 
-```{r}
+```{r userall, fig.cap="Figure 2: Username yang paling sering ada dalam twit", fig.align='center'}
+
 user_terlibat <- raw_jod %>%
   group_by(fase) %>%
   unnest_tokens(user_all, user_all, to_lower = FALSE) %>%
@@ -266,7 +284,6 @@ user_terlibat %>%
   geom_col(show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~fase) +
-  ggtitle("Username yang paling sering ada dalam twit") +
   labs(x = "Username", 
        y = "Frekuensi")
 ```
@@ -297,7 +314,7 @@ jod_dist <- jod_dist %>%
 
 **plot partisipasi**
 
-```{r}
+```{r, fig.align='center', fig.cap="Figure 3: Distribusi twit, user dan aktvitas pengguna tagar"}
 # melt the data for ggplot using `reshape2`
 jod_dist <- melt(jod_dist, id = "date")
 
@@ -305,7 +322,7 @@ jod_dist <- melt(jod_dist, id = "date")
 ggplot(data=jod_dist, aes(x=date, y=value, colour=variable)) +
   geom_line(show.legend = FALSE) +
   scale_x_date(labels = date_format("%Y-%m"), 
-               breaks = date_breaks("5 months")) +
+               breaks = date_breaks("6 months")) +
   facet_grid(variable~., scales="free") +
   theme(legend.position="top")
 ```
@@ -319,8 +336,10 @@ Untuk mendapatkan tilikan dan jawaban pertanyaan di atas, saya mengambil twit da
 **Rerata twit secara umum = 12 twit per hari**
 
 ### Fase 1 - Emergency
+Fase Emergence berasal dari twit yang diunggah dari 2013-10-07 sampai 2013-12-31
 
-```{r}
+```{r, fig.align='center', fig.cap="Figure 4: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Emergence", out.width=c('50%', '50%'), fig.show='hold'}
+
 fase1_dist <- raw_jod %>%
   filter(fase == "1_Emergence") %>%
   select(date) %>%
@@ -329,14 +348,9 @@ fase1_dist <- raw_jod %>%
 
 ggplot(fase1_dist, aes(x = date, y = n)) + 
   geom_line() + 
-  ggtitle("Distribusi twit pada fase Emergence") +
   labs(x = NULL, 
        y = NULL)
-```
 
-**Rerata fase1 = 58 twit per hari**
-
-```{r}
 fase1_dist %>%
   filter(n > 58) %>%
   dplyr::arrange(desc(date)) %>%
@@ -344,14 +358,47 @@ fase1_dist %>%
   geom_col(show.legend = FALSE) +
   coord_flip() +
   labs(x = NULL, 
-       y = "Tanggal ketika tagar lebih sering digunakan")
+       y = NULL)
 ```
 
-Terdapat 14 hari di mana tagar pada fase 1 lebih sering digunakan. 13 hari diantaranya berasal secara berutan dari tanggal 09 oktober 2013 hingga 21 oktober 2013. Sementara satu lainya dari tanggal 15 November 2013. 
+**Rerata fase1 = 58 twit per hari**
+
+Terdapat 14 hari di mana tagar pada fase 1 lebih sering digunakan. 13 hari diantaranya berasal secara berutan dari tanggal 09 oktober 2013 hingga 21 oktober 2013. Sementara satu tanggal lainya dari tanggal 15 November 2013. 
+
+### Fase 2 - Coalescence
+Fase Coalescence berasal dari twit yang diunggah dari 2014-01-01 sampai 2014-06-30
+
+```{r, fig.align='center', fig.cap="Figure 5: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Coalescence", out.width=c('50%', '50%'), fig.show='hold'}
+
+fase2_dist <- raw_jod %>%
+  filter(fase == "2_Coalescence") %>%
+  select(date) %>%
+  group_by(date) %>%
+  count(date)
+
+ggplot(fase2_dist, aes(x = date, y = n)) + 
+  geom_line() + 
+  labs(x = NULL, 
+       y = NULL)
+
+fase2_dist %>%
+  filter(n > 58) %>%
+  dplyr::arrange(desc(date)) %>%
+  ggplot(aes(x = as.character(date), y = n)) + 
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(x = NULL, 
+       y = NULL)
+```
+
+### Fase 3 - Bureaucratization
+Periode ini berasal dari twit yang diunggah dari 2014-07-01 sampai 2014-12-31
 
 
-
+### Fase 4 - Decline
+Periode ini berasal dari twit yang diunggah dari 2015-01-01 sampai 2017-08-30
 
 ## Pembentukan opini publik: Tagar sebagai tempat diskusi
 
 # Simpulan
+
