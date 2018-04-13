@@ -25,7 +25,7 @@ Untuk menjawab pertanyaan tersebut, tiga indikator dimensi struktural ruang publ
 
 Pembahasan dibagi menjadi beberapa bagian. Pertama, membahas berbagai aktivitas warga net di dalam Twitter. Kedua, membahas berbagai kejadian di dunia nyata yang melatari penggunaan tagar. Ketiga, membahas makna keberadaan tagar sebagai sebuah ruang yang dapat dijadikan tempat untuk mendiskusikan kebijakan.
 
-# Preparation
+# Persiapan
 
 ## R Library
 ```{r}
@@ -93,19 +93,19 @@ Untuk melihat perkembangan penggunaan tagar, twit dibagi menjadi beberapa period
 ```{r}
 a <- raw_jod %>% 
   subset(date >= "2013-10-07" & date <= "2013-12-31" ) %>%
-  mutate(fase = "emergence")
+  mutate(fase = "1_Emergence")
 
 b <- raw_jod %>% 
   subset(date >= "2014-01-01" & date <= "2014-10-31" ) %>%
-  mutate(fase = "Coalescence")
+  mutate(fase = "2_Coalescence")
 
 c <- raw_jod %>% 
   subset(date >= "2014-11-01" & date <= "2015-10-31" ) %>%
-  mutate(fase = "Bureaucratization")
+  mutate(fase = "3_Bureaucratization")
 
 d <- raw_jod %>% 
   subset(date >= "2015-11-01" & date <= "2017-08-31" ) %>%
-  mutate(fase = "Decline")
+  mutate(fase = "4_Decline")
 
 raw_jod <- bind_rows(a, b, c, d)
 rm(a, b, c, d)
@@ -201,25 +201,88 @@ Menggabungkan hasil cleaning dengan data awal
 
 ```{r}
 raw_jod <- bind_cols(raw_jod, jod_clean)
+# zzzzzz clean environment
 rm(jod_clean)
-
-# deleting multiple column
-#raw_jod = raw_jod[,-c(16,17)]
 ```
 
 
 ## Hashtag per row
 
 ```{r}
-raw_jod = raw_jod[,-c(16,17)]
+# mengekstrak username dari kolom hasil gabungan di atas 
+raw_jod$hashtag <- sapply(str_extract_all(raw_jod$tweets, "#\\S+", simplify = FALSE), paste, collapse=" ")
+
+# merenggangkan tanda : setelah username 
+#raw_jod$user_all <- gsub(":", " \\1 ", raw_jod$user_all, perl=T)
+
+raw_jod$tag_count <- sapply(raw_jod$hashtag, function(x) length(unlist(strsplit(as.character(x), "@\\S+"))))
 ```
 
+# Analsis
+Untuk mendapatkan tilikan, saya coba petakan terlebih dahulu tagar-tagar yang digunakan dalam twit dan melihat 10 tagar dengan frekuensi tertinggi berkembang dalam setiap fase gerakan. 
 
-# Konteks dan setting munculnya isu
+**tagar**
+```{r}
+tagar <- raw_jod %>%
+  group_by(fase) %>%
+  unnest_tokens(hashtag, hashtag, to_lower = FALSE) %>%
+  count(hashtag, sort = TRUE) %>%
+  arrange(desc(n)) %>%
+  ungroup()
 
-# Partisipasi Pengguna Tagar
+# viz
+tagar %>%
+  arrange(desc(n)) %>%
+  top_n(20) %>%
+  ggplot(aes(x = reorder(hashtag, n), y = n, fill = "fase")) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~fase) +
+  ggtitle("Tagar paling sering digunakan") +
+  labs(x = "Tagar", 
+       y = "Frekuensi")
+```
 
-# Pembentukan opini publik: Tagar sebagai tempat diskusi
+1. Pada fase pertama, pada prinsipnya hanya satu tagar yang paling sering digunakan, yaitu tagar #jogjaoradidol. 
+2. Pada fase kedua, hal yang dibicarakan oleh warga net dalam twit dengan tagar #jogjaoradidol mulai berkembang. Hal ini ditandai dengan munculya tagar #balitolakreklamasi, #jogja, dan 10thjhf. Tiga tagar tersebut mengindikasikan mulai berkembangnya pembahasan tentang isu utama dibalik tagar #jogjaoradidol. **Pertanyaan:** apakah ini proses pelembagaan publik dalam bentuk discourse?
+3. Pada fase ketiga, lebih berkembang lagi, ada tagr jogjasat, dan selman ambyar yang merupakan representasi lain dari dibalik tagar utama. 2 tagar tersebut menunjukkan isu yang lebih spesifik, JogjaAsat tentang air, dan sleman tentang daerah Sleman. 
+4. Pada fase keempat, mengercut dari segi keberagaman, dan menurun dari segi jumlah. **Pertanyaan:** apakah gerakan ini sudah sukses? namun satu hal yang pasti, pembagian fase yang saya lakukan sepertinya tidak terlalu meleset.
+
+**user all**
+**Pertanyaan:** Apakah aktornya juga berkembang? 
+```{r}
+user_terlibat <- raw_jod %>%
+  group_by(fase) %>%
+  unnest_tokens(user_all, user_all, to_lower = FALSE) %>%
+  count(user_all, sort = TRUE) %>%
+  arrange(desc(n)) %>%
+  ungroup()
+# viz
+user_terlibat %>%
+  arrange(desc(n)) %>%
+  top_n(10) %>%
+  ggplot(aes(x = reorder(user_all, n), y = n, fill = "fase")) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~fase) +
+  ggtitle("Username yang paling sering ada dalam twit") +
+  labs(x = "Username", 
+       y = "Frekuensi")
+```
+
+Aktor yang dalam konteks ini direpresentasikan oleh username juga mengalami "perkembangan". Di mana pada fase awal, tagar lebih sering digunakan oleh username @JogjaOraDidol, dan @JRX_SID lalu pada fase kedua oleh @rembugjogja dan @kilthedj. Pada fase ketiga oleh @dodoputrabangsa dan @joeyakarta. Hal ini menunjukkan bahwa tagar cenderung merepresentasikan sebuah tempat, dimana setiap orang bisa ada didalamnya. Ia tidak terikat hanya dengan salah satu aktor atau pengerak. Hal tersebut dibuktikan dengan adanya perbuahan username. 
+
+## Konteks dan setting munculnya isu
+Idealnya ini bisa dipetakan setelah partisipasi warga net diketahui. Tapi untuk kebutuhan laporan, mari lakukan saja dengan sistematika seperti ini. 
+
+## Partisipasi Pengguna Tagar
+
+1. jumlah twit per hari
+2. jumlah user per hari
+3. jumlah fav, ret, dan fav
 
 
-# Simpulan
+
+## Pembentukan opini publik: Tagar sebagai tempat diskusi
+
+## Simpulan
