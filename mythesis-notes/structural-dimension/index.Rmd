@@ -4,12 +4,15 @@ author: "Ujang Fahmi"
 date: "4/11/2018"
 output:
   html_document:
+    includes:
+      after_body: footer.Rhtml
     number_sections: yes
     toc: yes
     toc_depth: 3
     toc_float: yes
-    includes:
-      after_body: footer.Rhtml
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   word_document:
     toc: yes
     toc_depth: '3'
@@ -30,6 +33,9 @@ p.caption {
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
+Sys.timezone(location = TRUE)
+
+Sys.setenv(TZ="Asia/Jakarta")
 ```
 
 # Pendahuluan
@@ -53,6 +59,8 @@ library(lubridate)
 library(tm)
 library(reshape2)
 library(scales)
+library(AnomalyDetection)
+library(anomalize)
 ```
 
 Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada. 
@@ -331,14 +339,48 @@ Apa itu? itu adalah distribusi pengguna, twit, dan aktivitas lainnya selama 1081
 
 Hal apa saja yang melatari partisipasi seperti yang ditunjukkan plot di atas? atau ada saja dibali distribusi di atas?
 
-Untuk mendapatkan tilikan dan jawaban pertanyaan di atas, saya mengambil twit dari tanggal-tanggal, di mana orang cenderung lebih sering menggunakan tagar. Di sini, tangal tersebut diambil berdasarkan frekuensi twit yang melebih rerata per fase.  
+Untuk mendapatkan tilikan dan jawaban pertanyaan di atas, saya mengambil twit dari tanggal-tanggal, di mana orang cenderung lebih sering menggunakan tagar. Di sini, tangal tersebut diambil berdasarkan frekuensi twit yang menjadi anomali dalam setiap fase. 
+
+**Anomali all**
+```{r, fig.align='center', fig.cap="Figure 4: Anomali penggunaan tagar dari tahun 2013-2017"}
+#df1
+df1$date <- as.POSIXct(df1$date, format = "%Y-%m-%d")
+
+anomali_all = AnomalyDetectionTs(df1, max_anoms=0.02, direction='both', plot=TRUE)
+
+anomali_all$plot
+```
+
+Secara keseluruhan, anomali terjadi pada:
+
+1.  2013-10-09 dengan frekuensi 350
+2.  2013-10-10 dengan frekuensi 895
+3.  2013-10-11 dengan frekuensi 548
+4.  2013-10-12 dengan frekuensi 528
+5.  2013-10-13 dengan frekuensi 348
+6.  2013-10-14 dengan frekuensi 329
+7.  2013-10-15 dengan frekuensi 241
+8.  2013-10-16 dengan frekuensi 137
+9.  2013-10-17 dengan frekuensi 150
+10. 2013-10-20 dengan frekuensi 134
+11. 2013-11-15 dengan frekuensi 162
+12. 2014-06-20 dengan frekuensi 193
+13. 2014-09-05 dengan frekuensi 159
+14. 2014-09-07 dengan frekuensi 247
+15. 2014-09-08 dengan frekuensi 188
+16. 2014-09-19 dengan frekuensi 167
+17. 2014-09-22 dengan frekuensi 169
+18. 2014-10-07 dengan frekuensi 403
+19. 2014-11-06 dengan frekuensi 225
+20. 2014-12-28 dengan frekuensi 223
+21. 2014-12-29 dengan frekuensi 308
 
 **Rerata twit secara umum = 12 twit per hari**
 
 ### Fase 1 - Emergency
 Fase Emergence berasal dari twit yang diunggah dari 2013-10-07 sampai 2013-12-31
 
-```{r, fig.align='center', fig.cap="Figure 4: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Emergence", out.width=c('50%', '50%'), fig.show='hold'}
+```{r, fig.align='center', fig.cap="Figure 5: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Emergence", out.width=c('50%', '50%'), fig.show='hold'}
 
 fase1_dist <- raw_jod %>%
   filter(fase == "1_Emergence") %>%
@@ -348,6 +390,7 @@ fase1_dist <- raw_jod %>%
 
 ggplot(fase1_dist, aes(x = date, y = n)) + 
   geom_line() + 
+  geom_smooth() +
   labs(x = NULL, 
        y = NULL)
 
@@ -361,14 +404,23 @@ fase1_dist %>%
        y = NULL)
 ```
 
-**Rerata fase1 = 58 twit per hari**
+**Rerata per hari = 58 **
 
 Terdapat 14 hari di mana tagar pada fase 1 lebih sering digunakan. 13 hari diantaranya berasal secara berutan dari tanggal 09 oktober 2013 hingga 21 oktober 2013. Sementara satu tanggal lainya dari tanggal 15 November 2013. 
+
+**Anomali Detection Fase 1**
+```{r, fig.align='center', fig.cap="Figure 6: Anomali penggunaan tagar pada fase 1"}
+fase1_dist$date <- as.POSIXct(fase1_dist$date)
+fase1_anomali = AnomalyDetectionTs(fase1_dist, max_anoms=0.02, direction='both', plot=TRUE)
+fase1_anomali$plot
+```
+
+**Terjadi anomali pada tanggal 2013-10-10 dengan frekuensi 895**
 
 ### Fase 2 - Coalescence
 Fase Coalescence berasal dari twit yang diunggah dari 2014-01-01 sampai 2014-06-30
 
-```{r, fig.align='center', fig.cap="Figure 5: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Coalescence", out.width=c('50%', '50%'), fig.show='hold'}
+```{r, fig.align='center', fig.cap="Figure 7: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Coalescence", out.width=c('50%', '50%'), fig.show='hold'}
 
 fase2_dist <- raw_jod %>%
   filter(fase == "2_Coalescence") %>%
@@ -378,11 +430,54 @@ fase2_dist <- raw_jod %>%
 
 ggplot(fase2_dist, aes(x = date, y = n)) + 
   geom_line() + 
+  geom_smooth() +
   labs(x = NULL, 
        y = NULL)
 
 fase2_dist %>%
-  filter(n > 58) %>%
+  filter(n >= 188) %>%
+  dplyr::arrange(desc(date)) %>%
+  ggplot(aes(x = as.character(date), y = n)) + 
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(x = NULL, 
+       y = NULL)
+```
+Rerata per hari = 15
+
+**Anomali Detection Fase 2**
+```{r, fig.align='center', fig.cap="Figure 8: Anomali penggunaan tagar pada fase 2"}
+fase2_dist$date <- as.POSIXct(fase2_dist$date)
+fase2_anomali = AnomalyDetectionTs(fase2_dist, max_anoms=0.02, direction='both', plot=TRUE)
+fase2_anomali$plot
+```
+
+Terjadi anomali frekuensi pada:
+
+1. 2014-06-20 dengan 193
+2. 2014-09-07 dengan 247
+3. 2014-09-08 dengan 188
+4. 2014-10-07 dengan 403
+
+### Fase 3 - Bureaucratization
+Periode ini berasal dari twit yang diunggah dari 2014-07-01 sampai 2014-12-31
+
+```{r, fig.align='center', fig.cap="Figure 9: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Coalescence", out.width=c('50%', '50%'), fig.show='hold'}
+
+fase3_dist <- raw_jod %>%
+  filter(fase == "3_Bureaucratization") %>%
+  select(date) %>%
+  group_by(date) %>%
+  count(date)
+
+ggplot(fase3_dist, aes(x = date, y = n)) + 
+  geom_line() + 
+  geom_smooth() +
+  labs(x = NULL, 
+       y = NULL)
+
+fase3_dist %>%
+  filter(n >= 98) %>%
   dplyr::arrange(desc(date)) %>%
   ggplot(aes(x = as.character(date), y = n)) + 
   geom_col(show.legend = FALSE) +
@@ -391,14 +486,76 @@ fase2_dist %>%
        y = NULL)
 ```
 
-### Fase 3 - Bureaucratization
-Periode ini berasal dari twit yang diunggah dari 2014-07-01 sampai 2014-12-31
+Rerata per hari = 12
 
+**Anomali Detection Fase 3**
+```{r, fig.align='center', fig.cap="Figure 10: Anomali penggunaan tagar pada fase 3"}
+fase3_dist$date <- as.POSIXct(fase3_dist$date)
+fase3_anomali = AnomalyDetectionTs(fase3_dist, max_anoms=0.02, direction='both', plot=TRUE)
+fase3_anomali$plot
+```
+
+Anomali frekuensi twit terjadi pada:
+
+1. 2014-11-06 dengan jumlah 225 twit
+2. 2014-11-07 dengan jumlah 102 twit
+3. 2014-12-28 dengan jumlah 223 twit
+4. 2014-12-29 dengan jumlah 308 twit
+5. 2015-04-01 dengan jumlah 98 twit
+6. 2015-10-06 dengan jumlah 109 twit
 
 ### Fase 4 - Decline
 Periode ini berasal dari twit yang diunggah dari 2015-01-01 sampai 2017-08-30
 
+```{r, fig.align='center', fig.cap="Figure 11: Distribusi twit dan tanggal dengan frekuensi diatas rerata pada fase Coalescence", out.width=c('50%', '50%'), fig.show='hold'}
+
+fase4_dist <- raw_jod %>%
+  filter(fase == "4_Decline") %>%
+  select(date) %>%
+  group_by(date) %>%
+  count(date)
+
+ggplot(fase4_dist, aes(x = date, y = n)) + 
+  geom_line() + 
+  geom_smooth() +
+  labs(x = NULL, 
+       y = NULL)
+
+fase4_dist %>%
+  filter(n >= 14) %>%
+  dplyr::arrange(desc(date)) %>%
+  ggplot(aes(x = as.character(date), y = n)) + 
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(x = NULL, 
+       y = NULL)
+```
+
+Rerata per hari = 2
+
+**Anomali Detection Fase 21**
+```{r, fig.align='center', fig.cap="Figure 12: Anomali penggunaan tagar pada fase 4"}
+fase4_dist$date <- as.POSIXct(fase4_dist$date, format = "%Y-%m-%d")
+
+fase4_anomali = AnomalyDetectionTs(fase4_dist, max_anoms=0.02, direction='both', plot=TRUE)
+
+fase4_anomali$plot
+```
+
+Terjadi anomali frekuensi twit pada:
+
+1. 2015-11-10 dengan jumlah 18
+2. 2015-11-26 dengan jumlah 15
+3. 2015-12-26 dengan jumlah 14
+4. 2016-02-16 dengan jumlah 16
+5. 2016-03-16 dengan jumlah 14
+6. 2016-04-30 dengan jumlah 19
+7. 2016-05-06 dengan jumlah 19
+8. 2016-05-07 dengan jumlah 17
+9. 2016-10-06 dengan jumlah 23
+
 ## Pembentukan opini publik: Tagar sebagai tempat diskusi
+
 
 # Simpulan
 
