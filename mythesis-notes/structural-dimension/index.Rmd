@@ -559,7 +559,7 @@ fase4_dist %>%
 
 Rerata per hari = 2
 
-**Anomali Detection Fase 21**
+**Anomali Detection Fase 4**
 ```{r, fig.align='center', fig.cap="Figure 12: Anomali penggunaan tagar pada fase 4"}
 fase4_dist$date <- as.POSIXct(fase4_dist$date, format = "%Y-%m-%d")
 
