@@ -320,7 +320,33 @@ jod_dist <- jod_dist %>%
   select(date, fav_count, rep_count, ret_count, user_count, tweet_count = n)
 ```
 
-**plot partisipasi**
+Menyimpan data tentang partisipasi 
+
+```{r}
+write.csv(jod_dist, "partisipasi_jod.csv")
+```
+
+**partisipasi per bulan**
+
+```{r}
+per_month <- jod_dist %>% 
+  group_by(bulan=floor_date(date, "month")) %>%
+   summarize(freq_bulan=sum(tweet_count))
+```
+
+```{r}
+per_month$bulan = factor(months(per_month$bulan), levels = c('January','February','March','April','May','June','July','August','September','October','November','December'))
+
+per_month %>%
+  ggplot(aes(x = bulan, y = freq_bulan)) + 
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, 
+       y = NULL)
+
+```
+
+
+**plot partisipasi all**
 
 ```{r, fig.align='center', fig.cap="Figure 3: Distribusi twit, user dan aktvitas pengguna tagar"}
 # melt the data for ggplot using `reshape2`
