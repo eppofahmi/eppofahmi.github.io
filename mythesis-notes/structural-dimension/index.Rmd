@@ -358,7 +358,8 @@ ggplot(data=jod_dist, aes(x=date, y=value, colour=variable)) +
   scale_x_date(labels = date_format("%Y-%m"), 
                breaks = date_breaks("6 months")) +
   facet_grid(variable~., scales="free") +
-  theme(legend.position="top")
+  theme(legend.position="top") + 
+  labs(x = "Tahun- Bulan", y = "Jumlah")
 ```
 
 Apa itu? itu adalah distribusi pengguna, twit, dan aktivitas lainnya selama 1081 hari dari 07-10-2010 sampai 30-08-2017. Jika mengacu pada pembagian periode, di mana data dibagi menjadi empat, maka orang lebih banyak menggunakan tagar pada fase Emergence (mulai 2013-10-07) hingga fase Bureaucratization (berakhir pada 2014-12-31). Setelah itu, partisipasi warga net dalam penggunaan tagar mengalami penurunan.
