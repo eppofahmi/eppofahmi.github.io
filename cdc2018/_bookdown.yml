@@ -1,0 +1,10 @@
+new_session: yes
+
+book_filename: "cdc-2018"
+language:
+  label:
+    fig: "Gambar "
+    tab: "Tabel "
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: yes

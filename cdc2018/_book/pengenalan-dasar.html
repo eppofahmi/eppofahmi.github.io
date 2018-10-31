@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Coding for Social Scientist</title>
+  <meta name="description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Coding for Social Scientist" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018." />
+  <meta name="github-repo" content="eppofahmi/belajaR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Coding for Social Scientist" />
+  
+  <meta name="twitter:description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018." />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Ujang Fahmi and Canggih Puspo Wibowo">
+
+
+<meta name="date" content="2018-10-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="pengantar.html">
+<link rel="next" href="proses-ekstraksi-informasi.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Coding for Social Scientist</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Selamat Datang</a></li>
+<li class="chapter" data-level="" data-path="pengantar.html"><a href="pengantar.html"><i class="fa fa-check"></i>Pengantar</a></li>
+<li class="chapter" data-level="1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html"><i class="fa fa-check"></i><b>1</b> Pengenalan dasar</a><ul>
+<li class="chapter" data-level="1.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#menyiapkan-r"><i class="fa fa-check"></i><b>1.1</b> Menyiapkan R</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#install-package"><i class="fa fa-check"></i><b>1.1.1</b> Install Package</a></li>
+<li class="chapter" data-level="1.1.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#latihan-1"><i class="fa fa-check"></i><b>1.1.2</b> Latihan 1</a></li>
+<li class="chapter" data-level="1.1.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#simbol-simbol-utama"><i class="fa fa-check"></i><b>1.1.3</b> Simbol-simbol utama</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#membuat-skrip-r"><i class="fa fa-check"></i><b>1.2</b> Membuat skrip R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#latihan-2"><i class="fa fa-check"></i><b>1.2.1</b> Latihan 2</a></li>
+<li class="chapter" data-level="1.2.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#menulis-skrip"><i class="fa fa-check"></i><b>1.2.2</b> Menulis skrip</a></li>
+<li class="chapter" data-level="1.2.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#tidyverse"><i class="fa fa-check"></i><b>1.2.3</b> Tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#rangkuman"><i class="fa fa-check"></i><b>1.3</b> Rangkuman</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html"><i class="fa fa-check"></i><b>2</b> Proses Ekstraksi Informasi</a><ul>
+<li class="chapter" data-level="2.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#impor-dan-ekspor-data"><i class="fa fa-check"></i><b>2.1</b> Impor dan Ekspor Data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#membaca-data-import"><i class="fa fa-check"></i><b>2.1.1</b> Membaca data (Import)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menyimpan-data-ekspor"><i class="fa fa-check"></i><b>2.1.2</b> Menyimpan data (Ekspor)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menampilkan-data"><i class="fa fa-check"></i><b>2.1.3</b> Menampilkan data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#pre-processing"><i class="fa fa-check"></i><b>2.2</b> Pre-processing</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-karakter-non-ascii"><i class="fa fa-check"></i><b>2.2.1</b> Menghapus karakter non-ASCII</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-alamat-url"><i class="fa fa-check"></i><b>2.2.2</b> Menghapus alamat URL</a></li>
+<li class="chapter" data-level="2.2.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-tanda-ganti-baris"><i class="fa fa-check"></i><b>2.2.3</b> Menghapus tanda ganti baris</a></li>
+<li class="chapter" data-level="2.2.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#mengubah-ke-huruf-kecil"><i class="fa fa-check"></i><b>2.2.4</b> Mengubah ke huruf kecil</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#explorasi1"><i class="fa fa-check"></i><b>2.3</b> Eksplorasi</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#tokenisasi"><i class="fa fa-check"></i><b>2.3.1</b> Tokenisasi</a></li>
+<li class="chapter" data-level="2.3.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#akun-paling-banyak-disebut"><i class="fa fa-check"></i><b>2.3.2</b> Akun paling banyak disebut</a></li>
+<li class="chapter" data-level="2.3.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#tagar-paling-sering-digunakan"><i class="fa fa-check"></i><b>2.3.3</b> Tagar paling sering digunakan</a></li>
+<li class="chapter" data-level="2.3.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#kata-paling-sering-ditulis"><i class="fa fa-check"></i><b>2.3.4</b> Kata paling sering ditulis</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#visualisasi"><i class="fa fa-check"></i><b>2.4</b> Visualisasi</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="latihan.html"><a href="latihan.html"><i class="fa fa-check"></i><b>3</b> Latihan</a><ul>
+<li class="chapter" data-level="3.1" data-path="latihan.html"><a href="latihan.html#mendapatkan-data"><i class="fa fa-check"></i><b>3.1</b> Mendapatkan data</a></li>
+<li class="chapter" data-level="3.2" data-path="latihan.html"><a href="latihan.html#eksplorasi-data"><i class="fa fa-check"></i><b>3.2</b> Eksplorasi data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contoh-hasil-kerja.html"><a href="contoh-hasil-kerja.html"><i class="fa fa-check"></i><b>4</b> Contoh hasil kerja</a></li>
+<li class="chapter" data-level="5" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html"><i class="fa fa-check"></i><b>5</b> Sumber Belajar Mandiri</a><ul>
+<li class="chapter" data-level="5.1" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html#komunitas"><i class="fa fa-check"></i><b>5.1</b> Komunitas</a></li>
+<li class="chapter" data-level="5.2" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html#free-course"><i class="fa fa-check"></i><b>5.2</b> Free Course</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Coding for Social Scientist</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pengenalan-dasar" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Pengenalan dasar</h1>
+<p>Sebelum melangkah lebih jauh, mungkin kita terlebih dahulu perlu mengetahui apa itu bahasa pemrograman? apakah ia merupakan bahasa yang berfungsi sama dengan bahasa yang kita gunakan sehari-hari? Menurut <a href="https://en.wikipedia.org/wiki/Programming_language">Wikipedia</a>, bahasa pemrograman adalah:</p>
+<blockquote>
+<p>… a formal language, which comprises a set of instructions used to produce various kinds of output. Programming languages are used to create programs that implement specific algorithms.</p>
+</blockquote>
+<p>Berdasarkan definisi di atas, maka fungsi bahasa pemrograman kurang lebih sama dengan bahasa yang kita gunakan sehari-hari dalam membuat buku petunjuk atau resep masakan. Perbedaannya, bahasa yang kita gunakan ditujukan agar dapat dipahami oleh manusia, sedangkan bahasa pemrograman agar dapat dipahami oleh komputer, di mana <code>R</code> merupakan salah satu di antara bahasa pemrograman yang saat ini ada dan berkembang dengan pesat.</p>
+<p>Sementara <code>Rstudio</code> adalah alat untuk mempermudah penggunaan <code>R</code>. Di sini <code>RStudio</code> sering disebut sebagai <em>integrated development environment</em> (IDE) untuk R. Sederhananya, RStudio digunakan sebagai tampilan dari R. Oleh karena itu, untuk menggunakannya pun kita terlebih dahulu harus menginstall <code>R</code>. Gambar <code>1.1</code> menunjukkan tampilan antar muka <code>Rstudio</code> yang perlu diperhatikan.</p>
+<div class="figure"><span id="fig:intro1"></span>
+<img src="images/RStudio.png" alt="RStudio Interface terdiri empat bagian utama." width="100%" />
+<p class="caption">
+Gambar 1.1: RStudio Interface terdiri empat bagian utama.
+</p>
+</div>
+<p>Seperti dapat dilihat pada gambar <code>1.1</code>. Rstudio memiliki empat bagian yang memiliki fungsi masing-masing. Bagian pertama (1): digunakan untuk menulis script dan memiliki beberapa tombol. Untuk menjalankan script bisa klik run pada bagian kanan atas. Bagian kedua (2) : merupakan bagian <code>console</code> di mana kita bisa melihat script yang dijalankan. Bagian ketiga (3): merupakan bagian environment, dimana pada bagian tersebut terdapat beberapa bagian yang bisa pilih. Misalnya, bagian <code>Environment</code> untuk menampilkan data yang dimasukkan (diimport), bagian <code>Hystory</code> untuk melihat aktivitas yang sudah dilakukan dalam satu sesi R, dan bagian <code>Connection</code> untuk melihat dan mengatur koneksi R dengan database seperti <code>SQL</code> atau <code>SPARK</code>.</p>
+<p>Bagian terakhir (4): berfungsi untuk menampilkan hasil visualiasi (<code>plot</code>). Selain itu, pada bagian ini kita juga bisa melihat repository dan file-file yang ada di dalamnya. Lebih penting lagi, di sini kita juga dapat menemukan bantuan ketika kita lupa instruksi yang dibutuhkan. Untuk menemukan bantun atau penjelasan kita dapat menggunakan fungsi <code>?</code> diikuti dengan objek yang ingin dilihat. Contohnya adalah sebagai berikut.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">?read.csv</a></code></pre></div>
+<p>Dengan menuliskan code di atas pada bagian <code>console</code> dan menekan <code>Enter</code> pada bagian 4 akan menampilkan hasilnya. Di mana pada tampilan tersebuk kita bisa mendapatkan definisi fungsi sekaligus contoh penggunaannya. Selain itu, anda juga perlu mencoba untuk menggunakan fungsi bantuan lainnya, yaitu <code>help()</code> pada console dan lihat apa yang dihasilkan.</p>
+<p>Sebagai rangkuman, pada bagian ini kita sudah mengetahui dan mengenal beberapa bagian. Pertama untuk menggunakan <code>RStudio</code> kita terlebih dahulu perlu menginstall <code>R</code>. Untuk mendapatkan bantuan penjelasan kita bisa menggunakan fungsi <code>help()</code> atau <code>?</code> diikuti objek yang ingin dilihat. Rstudi terdiri dari beberapa. Untuk ini saya sarankan untuk mengeksplorasinya lebih jauh, karena pada bagian selanjutnya kita akan mulai belajar untuk menulis dan menjalankan script.</p>
+<div id="menyiapkan-r" class="section level2">
+<h2><span class="header-section-number">1.1</span> Menyiapkan R</h2>
+<p>Agar dapat menggunakan R secara lokal atau PC/laptop masing-masing, kita perlu mengunduh installernya terlebih dahulu di laman berikut:</p>
+<ol style="list-style-type: decimal">
+<li>Dari Indonesia, R bisa didapat secara gratis di laman: <a href="https://repo.bppt.go.id/cran/" class="uri">https://repo.bppt.go.id/cran/</a></li>
+<li>Rstudio dapat didownload melalui laman: <a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a></li>
+</ol>
+<p>Kita bisa menyesuaikan file installer yang sesuai dengan machine laptop/PC masing, misalnya untuk <code>MAC</code>, <code>WINDOWS</code> atau <code>LINUX</code>. Setelah dua file tersebut terunduh silahkan install <code>R</code> terlebih dahulu kemudian <code>RStudio</code>. Setelah keduanya berhasil di install saat ini mesin pc/latop, jalankan Rstudio. Selanjutnya coba tuliskan script dibawah ini pada bagian <code>console</code> lalu tekan <code>enter</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">?help</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">?base</a></code></pre></div>
+<p>Script di atas akan mengarahkan anda pada sebuah halaman baru yang berisi keterangan tentang package dasar <span class="citation">(R Core Team <a href="#ref-R-base">2018</a>)</span> pada bagian kolom 1 dan keterangan fungsi-fungsi dasar pada kolom 4. Pada bagian kolom 4 ada tulisan <code>[Package base version 3.5.1 Index]</code>, klik bagian <code>index</code> yang berwarna biru dan anda akan diarahkan pada dokumentasi fungsi-fungsi dasar R. Klik salah satu fungsi untuk membaca penjelasn dan melihat contoh penggunaannya.</p>
+<div id="install-package" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Install Package</h3>
+<p>Seperti telah dijelaskan dalam pengantar, pengolahan data dengan R didukung oleh berbagaik packages atau library yang dokumentasinya dapat dilihat di laman ini: <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html" class="uri">https://cran.r-project.org/web/packages/available_packages_by_name.html</a>. Untuk dapat menggunakannya anda perlu menginstallnya terlebih dahulu. Hal ini bisa dilakukan dengan menggunakan salah satu fungsi dasar R, yaitu <code>install.packages()</code>, di dalam kurung di isi dengan nama package/library. Misalnya, nama package yang akan diinstall adalah <code>tidyverse</code> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2017</a>)</span>, maka pada bagian <code>console</code> kita bisa menuliskan script berikut lalu klik enter.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<p>Agar dapat menginstall package, pc/laptop kita harus terhubung dengan internet karena R akan mendownload dari laman <code>CRAN</code> di atas. Selam proses menginstall sebaiknya kita tidak menyimpan script apapun. Barus setelah selasai menginstall kita bisa melanjutkan aktivitas di RStudio. Kita dapat mengetahui instalasi sudah selese dengan memperhatikan bagian console yang akan mengeprint aktivitas yang sedang berlangsung. Selain itu, pada bagian <code>console</code> sebelah kanan atas juga ada tanda merah jika masih ada proses yang berlangsung.</p>
+<p>Selain dengan menggunakan fungsing <code>install.packages()</code>, packaages atau library juga diinstall dengan menggunakan fitur yang sematkan di RStudi, yaitu fitur <code>Tools</code>. Fitur <code>Tools</code> terletak dibagian atas antar muka, dan kita hanya perlu memilih menu <code>install packages</code> yang ada di dalamnya dan akan muncul kota dialog baru seperti di terlihat pada gambar berikut.</p>
+<div class="figure"><span id="fig:intro5"></span>
+<img src="images/installpackage.png" alt="RStudio Interface terdiri empat bagian utama." width="40%" />
+<p class="caption">
+Gambar 1.2: RStudio Interface terdiri empat bagian utama.
+</p>
+</div>
+<p>Dialog box seperti pada gambar 1.2 menunjukkan ada tiga isian yang perlu diperhatikan. Pertama, bagian sumber. Secara <em>default</em> sumber package yang akan diinstall diambil dari CRAN. Kedua, kolom nama package yang harus diisi secara manual (ketik). Ketiga, kolom yang menunjukkan <em>repository</em> atau folder tempat package akan diinstall. Keemapat, dependency yang ketika dicentang berarti kita akan menginstal package atau library lain yang dibutuhkan oleh package yang akan diinstall. Untuk sementara, dua kolom yang disebut terakhir disarankan untuk biarkan pengaturan semula atau <em>default</em>.</p>
+</div>
+<div id="latihan-1" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> Latihan 1</h3>
+<blockquote>
+<p>Untuk mengelola teks, terdapat salah satu library dengan nama <code>tidytext</code>. Installah library tersebut dengan salah satu metode install package yang sudah dijelaskan.</p>
+</blockquote>
+</div>
+<div id="simbol-simbol-utama" class="section level3">
+<h3><span class="header-section-number">1.1.3</span> Simbol-simbol utama</h3>
+<p>Secara lengkapnya, simbol dan fungsi-fungsi dasar dapat dipelajari <a href="https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">di sini</a>. Namun pada umumnya, dalam <code>R</code> ada dua simbol utama yang sering digunakan yaitu <code>&quot;xyz&quot;</code> (tanda petik) dan <code>#</code> (tanda pagar).</p>
+<ol style="list-style-type: decimal">
+<li>Tanda petik (<code>&quot;xyz&quot;</code>) digunakan untuk menunjukkan bahwa apapun yang ada diantara dua tanda petik tersebut dianggap sebagai character (<code>chr</code>). Sebagai contoh, jalankan script di bawah ini.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># vector</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">huruf_a &lt;-<span class="st"> &quot;1&quot;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># cek apakah karakter atau bukan</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">is.character</span>(huruf_a)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># vector</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">huruf_b &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># cek apakah karakter atau bukan</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">is.character</span>(huruf_b)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Tanda pagar (<code>#</code>) digunakan untuk memberikan komentar yang berfungsi untuk memberikan keterangan terhadap script yang kita buat. Sebagai contoh, pada script di atas term vector yang didahului oleh tanda pagar saya gunakan untuk mengingat bahwa kode yang ada dibahwanya merupakan sebuah vector. Sementara komentar berikutnya saya gunakan untuk memberikan keterangan bahwa kode yang ada dibawahnya digunkan untuk mengecek apakah benar <code>huruf_a</code> dan <code>huruf_b</code> merupakan karakter.</p></li>
+<li><p>Tanda <code>&lt;-</code> atau <code>=</code> dibaca sama dengan.</p></li>
+</ol>
+</div>
+</div>
+<div id="membuat-skrip-r" class="section level2">
+<h2><span class="header-section-number">1.2</span> Membuat skrip R</h2>
+<p>Dengan menggunakan <code>RStudio</code> kita bisa membuat beberja jenis script untuk menuliskan bahasa R. Untuk sementara saya hanya akan mengenalkan dua jenis dulu, yaitu <code>.R</code>. Caranya adalah dengan klik menu <code>File</code> -&gt; <code>New file</code> -&gt; <code>R Script</code> atau <code>Command+Shift+N</code> jika menggunakan Macbook. Sama seperti saat kita menulis atau membuat file pada umumnya, pada saat menulis script R untuk mengorganisasinya dengan mudah kita perlu meletakannya dalam sebuah folder atau <em>repository</em> khusus. Di dalam RStudio, kita bisa membuatnya dengan memilih <code>New Project...</code> pada menu file, lalu pilih <code>New Directory</code> dan pilih <code>New Project</code>. Setelah itu, kita bisa menentukan hardisk yang akan digunakan untuk menyimpan file <em>project</em> yang sedang dikerjakan, menamai folder, dan lain sebagainya. Dengan cara seperti itu, pekerjaan kita bisa menjadi lebih terorganisasi.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Untuk memastikan di mana kita menyimpan file atau project</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">getwd</span>()</a></code></pre></div>
+<div id="latihan-2" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Latihan 2</h3>
+<blockquote>
+<p>Buatlah sebuah proyek baru dengan nama yang anda pilih sendiri. Setelah itu, buat sebuah R script dan simpan dalam project tersebut.</p>
+</blockquote>
+</div>
+<div id="menulis-skrip" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Menulis skrip</h3>
+<p>Untuk memulai menulis skrip, terdapat dua hal pertama yang ingin saya anggap sebagai dasar, yaitu cara membuat variabel dan mengenal jenis data. Terkait dengan jenis data, terdapat beberapa data yang bisa digunakan seperti vector, data frame, lists, dan matrix. Di sini kita akan lebih fokus ke vector dan data frame saja. Namun jika tertarik untuk mempelajarinya lebih lanjut bisa memulainya <a href="https://www.r-bloggers.com/basic-data-types-in-r/">di sini</a>.</p>
+<ul>
+<li><strong>Nama file</strong></li>
+</ul>
+<p>Dalam membuat variabel atau nama file di R tidak boleh ada spasi. Selain itu R juga case sensitve. Sebagi contoh kita ingin menamai file dengan nama <strong><code>Data Kita</code></strong> akan menyebabkan error karena ada spasi. Sebaiknya jika ingin menggunakan dua term atau elemen menyambungnya dengan <code>_</code> seperti: <strong><code>Data_Kita</code></strong>. Berikut adalah contohnya:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">Data_Kita &lt;-<span class="st"> </span>mtcars</a></code></pre></div>
+<p>Keterangan: skrip di atas mengambil data dengan nama mtcars, yang merupakan data bawaan dari R, sebagai data dengan nama Data_Kita.</p>
+<ul>
+<li><strong>Data frame</strong></li>
+</ul>
+<p>Sebuah data frame pada prinsipnya adalah sebuah tabel di mana setiap kolom memiliki satu jenis variable dan setiap baris (<em>row</em>) mengandung satu nilai untuk masing-masing variabel/kolom. Berikut ini adalah karakteristik dari suatu frame data yang contohnya dapat dilihat pada tabel <a href="pengenalan-dasar.html#tab:contohtable">1.1</a>.</p>
+<ol style="list-style-type: decimal">
+<li>Memiliki nama kolom</li>
+<li>Nama baris harus unik</li>
+<li>Data yang disimpan dalam data frame dapat berupa angka, faktor atau karakter</li>
+<li>Setiap kolom memiliki item data yang sama</li>
+</ol>
+<table>
+<caption><span id="tab:contohtable">Tabel 1.1: </span>Contoh Isi sebuah data frame</caption>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">genus</th>
+<th align="left">vore</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cheetah</td>
+<td align="left">Acinonyx</td>
+<td align="left">carni</td>
+</tr>
+<tr class="even">
+<td align="left">Owl monkey</td>
+<td align="left">Aotus</td>
+<td align="left">omni</td>
+</tr>
+<tr class="odd">
+<td align="left">Mountain beaver</td>
+<td align="left">Aplodontia</td>
+<td align="left">herbi</td>
+</tr>
+<tr class="even">
+<td align="left">Greater short-tailed shrew</td>
+<td align="left">Blarina</td>
+<td align="left">omni</td>
+</tr>
+<tr class="odd">
+<td align="left">Cow</td>
+<td align="left">Bos</td>
+<td align="left">herbi</td>
+</tr>
+</tbody>
+</table>
+<p>Untuk melihat rangkuman dan jenis sebuah data kita bisa menggunakan <code>summary()</code> dan <code>class()</code>. Untuk melihat struktur sebuah data bisa menggunakan fungsi <code>str()</code>.</p>
+<ul>
+<li><strong>Menjalankan skrip</strong></li>
+</ul>
+<p>Untuk menjalankan skrip R yang sudah kita tulis, kita bisa menggunakan <em>shortcut</em>. Jika menggunakan mac, kita blok bari skrip yang akan dijalankan dan tekan command+shift+enter. Selain itu kita bisa menggunakan tombol run dibagian kanan atas.</p>
+<p><strong>Lathian:</strong> Coba jalankan skrip di bawah ini dan lihat hasil dari tiga fungsi di atas, yaitu <code>summary()</code>, <code>class()</code>, dan <code>str()</code> pada data tentang pola tidur yang sudah ada dalam Rstudio.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">data &lt;-<span class="st"> </span>msleep <span class="co"># data</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">str</span>(data)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">class</span>(data)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">summary</span>(data)</a></code></pre></div>
+</div>
+<div id="tidyverse" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Tidyverse</h3>
+<p>Tidyverse merupakan kumpulan packages yang terdiri dari beberapa package lain, seperty <code>readr</code>, <code>dplyr</code>, <code>ggplot</code> dan beberapa package lainnya. Ketika menggunakan R untuk mengolah data atau mengeksplorasi data kita akan banyak menggunakan package-package ini. Secara keseluruhan, dalam modul ini saya akan mengenalakan beberapa fungsi dari tiga package yang disebutkan di atas dalam beberapa bagian yang berebeda sesuai dengan fungsinya.</p>
+<p>Pertama, readr akan lebih banyak digunakan untuk mengimpor data. Kedua, dplyr akan lebih banyak digunakan dalam melakukan pre-processing. Sementara ggplot akan sangat membantu dalam melakukan eksplorasi dengan visualisasi. Di sini saya akan lebih fokus untuk menjelaskan <code>dplyr</code> terlebih dahulu.</p>
+<p><code>dplyr</code> memiliki fungsi pipe yang tandangnya adalah <code>%&gt;%</code> yang berfungsi untuk mengaplikasikan baris berikutnya pada baris sebelumnya. Sebagai contoh dapat dilihat pada skrip di bawah ini.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">data &lt;-<span class="st"> </span>msleep <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a></code></pre></div>
+<p>Skrip di atas kita mengambil <code>msleep</code> yang kita sebuat sebagai <code>data</code>, lalu kita hanya memilih kolom nomor 1 sampai tiga saja dari data. Fungsi <code>select()</code> di sini berfungsi untuk memilih. Berikutnya adalah beberapa fungsi lain yang mungkin akan sering digunakan dalam proses belajar kita.</p>
+<p><code>select()</code>: pick columns by name</p>
+<p><code>filter()</code>: keep rows matching criteria</p>
+<p><code>arrange()</code>: reorder rows</p>
+<p><code>mutate()</code>: add new variables</p>
+<p><code>summarise()</code>: reduce variables to values</p>
+<p>Untuk belejar lebih lanjut untuk fungsi yang dimiliki oleh masing-masing package kita bisa menggunakan skrip di bawah ini. Misalnya kita ingin belajar tentang dplyr. Untuk package lain kita hanya perlu mengganti <code>dplyr</code> dan <code>readr</code> dengan nama package lainnya.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">browseVignettes</span>(<span class="dt">package =</span> <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">browseVignettes</span>(<span class="dt">package =</span> <span class="st">&quot;readr&quot;</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="rangkuman" class="section level2">
+<h2><span class="header-section-number">1.3</span> Rangkuman</h2>
+<p>Beberapa hal dasar yang telah sampaikan pada bagian ini adalah:</p>
+<ol style="list-style-type: decimal">
+<li>R bisa digunakan dengan RStudio yang bisa di dapat secara gratis</li>
+<li>Dalam mengolah data di R kita terbantu dengan package dan library yang ada yang dapat dinstall dengan menggunakan fungsi <code>install.package()</code></li>
+<li>Agar skrip lebih mudah dibaca dan dipahami kita bisa menambahkan komentar dengan didahului tanda pagar <code>#</code></li>
+<li>Untuk memulai menulis skrip kita sebaiknya terlebih dahulu membuat project dalam folder yang spesifik yang semuanya bisa diakses melalui menu <code>File</code></li>
+<li>Menggunakan library tidyverse dalam pengolahan data</li>
+<li>Mengetahui beberapa fungsi dasar dan dari tidyverse yang cenderung akan lebih banyak digunakan seperti <code>class()</code>, <code>str()</code>, <code>summary()</code> dan beberapa fungsi lainnya yang bisa dipelajari lebih lanjut melalui dokumentasi yang disediakan pembuat package dan dapat diakses baik dengan menggunakan fungsi <code>help()</code> maupun <code>browseVignettes(package = &quot;dplyr&quot;)</code>.</li>
+</ol>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-base">
+<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+</div>
+<div id="ref-R-tidyverse">
+<p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pengantar.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="proses-ekstraksi-informasi.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd",
+"text": "Edit"
+},
+"download": ["cdc-2018.pdf", "cdc-2018.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
