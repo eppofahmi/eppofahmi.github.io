@@ -10,7 +10,7 @@ dirwd <- paste(getwd(),"/wrangled jod/",sep='')
 net_data <- read_csv(paste(dirwd, "user_jod.csv", sep = ''), col_names = TRUE)
 
 # remove punct but _
-net_data$user_all <- gsub("[^[:alpha:][:space:]_]*", "", net_data$user_all) 
+net_data$user_all <- gsub("([._])|[[:punct:]]", "\\1", net_data$user_all)
 
 net_data <- net_data %>%
   select(periode, user_all)

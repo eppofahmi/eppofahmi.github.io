@@ -60,7 +60,6 @@ library(tm)
 library(reshape2)
 library(scales)
 library(AnomalyDetection)
-library(anomalize)
 ```
 
 Di sini saya akan terlebih dahulu mempersiapkan file yang ingin dianalisis. Persiapan meliputi membuat semua variable dalam format yang tepat, hingga menambah variabel baru berdasarkan data yang ada. 
@@ -292,8 +291,8 @@ user_terlibat %>%
   geom_col(show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~fase) +
-  labs(x = "Username", 
-       y = "Frekuensi")
+  labs(x = NULL, 
+       y = "Username occurrences")
 ```
 
 Aktor yang dalam konteks ini direpresentasikan oleh username juga mengalami "perkembangan". Di mana pada fase awal, tagar lebih sering digunakan oleh username @JogjaOraDidol, dan @JRX_SID lalu pada fase kedua oleh @rembugjogja dan @kilthedj. Pada fase ketiga oleh @dodoputrabangsa dan @joeyakarta. Hal ini menunjukkan bahwa tagar cenderung merepresentasikan sebuah tempat, dimana setiap orang bisa ada didalamnya. Ia tidak terikat hanya dengan salah satu aktor atau pengerak. Hal tersebut dibuktikan dengan adanya perbuahan username. 
@@ -368,9 +367,8 @@ Hal apa saja yang melatari partisipasi seperti yang ditunjukkan plot di atas? at
 
 Untuk mendapatkan tilikan dan jawaban pertanyaan di atas, saya mengambil twit dari tanggal-tanggal, di mana orang cenderung lebih sering menggunakan tagar. Di sini, tangal tersebut diambil berdasarkan frekuensi twit yang menjadi anomali dalam setiap fase. 
 
-**Anomali all**
-```{r, fig.align='center', fig.cap="Figure 4: Anomali penggunaan tagar dari tahun 2013-2017"}
-#df1
+# **Anomali all**
+```{r, fig.align='center'}
 df1$date <- as.POSIXct(df1$date, format = "%Y-%m-%d")
 
 anomali_all = AnomalyDetectionTs(df1, max_anoms=0.02, direction='both', plot=TRUE)
