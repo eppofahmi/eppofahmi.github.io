@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Coding for Social Scientist</title>
+  <meta name="description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Coding for Social Scientist" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018." />
+  <meta name="github-repo" content="eppofahmi/belajaR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Coding for Social Scientist" />
+  
+  <meta name="twitter:description" content="Modul pelatihan pengolahan big data yang diselenggarakan oleh CDC Fisipol, UGM, pada 31 Oktober 2018." />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Ujang Fahmi and Canggih Puspo Wibowo">
+
+
+<meta name="date" content="2018-10-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="pengenalan-dasar.html">
+<link rel="next" href="latihan.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Coding for Social Scientist</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Selamat Datang</a></li>
+<li class="chapter" data-level="" data-path="pengantar.html"><a href="pengantar.html"><i class="fa fa-check"></i>Pengantar</a></li>
+<li class="chapter" data-level="1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html"><i class="fa fa-check"></i><b>1</b> Pengenalan dasar</a><ul>
+<li class="chapter" data-level="1.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#menyiapkan-r"><i class="fa fa-check"></i><b>1.1</b> Menyiapkan R</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#install-package"><i class="fa fa-check"></i><b>1.1.1</b> Install Package</a></li>
+<li class="chapter" data-level="1.1.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#latihan-1"><i class="fa fa-check"></i><b>1.1.2</b> Latihan 1</a></li>
+<li class="chapter" data-level="1.1.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#simbol-simbol-utama"><i class="fa fa-check"></i><b>1.1.3</b> Simbol-simbol utama</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#membuat-skrip-r"><i class="fa fa-check"></i><b>1.2</b> Membuat skrip R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#latihan-2"><i class="fa fa-check"></i><b>1.2.1</b> Latihan 2</a></li>
+<li class="chapter" data-level="1.2.2" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#menulis-skrip"><i class="fa fa-check"></i><b>1.2.2</b> Menulis skrip</a></li>
+<li class="chapter" data-level="1.2.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#tidyverse"><i class="fa fa-check"></i><b>1.2.3</b> Tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="pengenalan-dasar.html"><a href="pengenalan-dasar.html#rangkuman"><i class="fa fa-check"></i><b>1.3</b> Rangkuman</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html"><i class="fa fa-check"></i><b>2</b> Proses Ekstraksi Informasi</a><ul>
+<li class="chapter" data-level="2.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#impor-dan-ekspor-data"><i class="fa fa-check"></i><b>2.1</b> Impor dan Ekspor Data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#membaca-data-import"><i class="fa fa-check"></i><b>2.1.1</b> Membaca data (Import)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menyimpan-data-ekspor"><i class="fa fa-check"></i><b>2.1.2</b> Menyimpan data (Ekspor)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menampilkan-data"><i class="fa fa-check"></i><b>2.1.3</b> Menampilkan data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#pre-processing"><i class="fa fa-check"></i><b>2.2</b> Pre-processing</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-karakter-non-ascii"><i class="fa fa-check"></i><b>2.2.1</b> Menghapus karakter non-ASCII</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-alamat-url"><i class="fa fa-check"></i><b>2.2.2</b> Menghapus alamat URL</a></li>
+<li class="chapter" data-level="2.2.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#menghapus-tanda-ganti-baris"><i class="fa fa-check"></i><b>2.2.3</b> Menghapus tanda ganti baris</a></li>
+<li class="chapter" data-level="2.2.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#mengubah-ke-huruf-kecil"><i class="fa fa-check"></i><b>2.2.4</b> Mengubah ke huruf kecil</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#explorasi1"><i class="fa fa-check"></i><b>2.3</b> Eksplorasi</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#tokenisasi"><i class="fa fa-check"></i><b>2.3.1</b> Tokenisasi</a></li>
+<li class="chapter" data-level="2.3.2" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#akun-paling-banyak-disebut"><i class="fa fa-check"></i><b>2.3.2</b> Akun paling banyak disebut</a></li>
+<li class="chapter" data-level="2.3.3" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#tagar-paling-sering-digunakan"><i class="fa fa-check"></i><b>2.3.3</b> Tagar paling sering digunakan</a></li>
+<li class="chapter" data-level="2.3.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#kata-paling-sering-ditulis"><i class="fa fa-check"></i><b>2.3.4</b> Kata paling sering ditulis</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="proses-ekstraksi-informasi.html"><a href="proses-ekstraksi-informasi.html#visualisasi"><i class="fa fa-check"></i><b>2.4</b> Visualisasi</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="latihan.html"><a href="latihan.html"><i class="fa fa-check"></i><b>3</b> Latihan</a><ul>
+<li class="chapter" data-level="3.1" data-path="latihan.html"><a href="latihan.html#mendapatkan-data"><i class="fa fa-check"></i><b>3.1</b> Mendapatkan data</a></li>
+<li class="chapter" data-level="3.2" data-path="latihan.html"><a href="latihan.html#eksplorasi-data"><i class="fa fa-check"></i><b>3.2</b> Eksplorasi data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="contoh-hasil-kerja.html"><a href="contoh-hasil-kerja.html"><i class="fa fa-check"></i><b>4</b> Contoh hasil kerja</a></li>
+<li class="chapter" data-level="5" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html"><i class="fa fa-check"></i><b>5</b> Sumber Belajar Mandiri</a><ul>
+<li class="chapter" data-level="5.1" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html#komunitas"><i class="fa fa-check"></i><b>5.1</b> Komunitas</a></li>
+<li class="chapter" data-level="5.2" data-path="sumber-belajar-mandiri.html"><a href="sumber-belajar-mandiri.html#free-course"><i class="fa fa-check"></i><b>5.2</b> Free Course</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Coding for Social Scientist</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="proses-ekstraksi-informasi" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Proses Ekstraksi Informasi</h1>
+<p>Pada bagian ini kita akan mempelajari bagaimana cara untuk mengekstrak informasi dari teks sosial media, terutama Twitter. Ada empat langkah utama dalam tahap ini, yaitu: impor/ekspor data, preprocessing, eksplorasi, dan visualisasi. Kita akan membahas secara singkat masing-masing langkah.</p>
+<div id="impor-dan-ekspor-data" class="section level2">
+<h2><span class="header-section-number">2.1</span> Impor dan Ekspor Data</h2>
+<p>Pada pengolahan data menggunakan R, direkomendasikan menggunakan tipe data file CSV (<code>Comma Separated Value</code>). Secara sederhana, file CSV merupakan file tabel yang serupa dengan XLS namun dengan variasi delimiter atau pemisah nilai. File CSV dapat diolah sebagaimana XLS dalam aplikasi Microsoft Excel.</p>
+<div id="membaca-data-import" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Membaca data (Import)</h3>
+<p>Untuk membaca file CSV dalam lingkungan R, ada banyak cara yang bisa dilakukan. Cara pertama yaitu dengan menggunakan fungsi yang sudah tersedia pada R, yaitu <code>read.csv()</code> dengan contoh perintah sebagai berikut</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(nama_file_csv)</a></code></pre></div>
+<p>Cara tersebut dapat digunakan untuk membaca CSV berukuran kecil. Sedangkan bila kita ingin membaca file CSV berukuran relatif besar, direkomendasikan menggunakan library <code>readr</code> seperti yang sudah disinggung pada bab sebelumnya. Penggunaan library ini memungkinkan file dibaca jauh lebih cepat dibandingkan metode sebelumnya. Perintah yang digunakan adalah</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">df &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(nama_file_csv)</a></code></pre></div>
+<p>Hasil pembacaan yang disimpan dalam <code>df</code> merupakan sebuah data tabel.</p>
+</div>
+<div id="menyimpan-data-ekspor" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Menyimpan data (Ekspor)</h3>
+<p>Kita dapat menggunakan fungsi dari <code>readr</code> yaitu <code>write_csv()</code> untuk menyimpan data tabel ke dalam file CSV. Perintah yang digunakan adalah sebagai berikut:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">readr<span class="op">::</span><span class="kw">write_csv</span>(nama_file_csv)</a></code></pre></div>
+</div>
+<div id="menampilkan-data" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Menampilkan data</h3>
+<p>Untuk menampilkan data, disediakan perintah <code>print()</code>. Contoh penggunaannya sebagai berikut:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">print</span>(df)</a></code></pre></div>
+<p>Perintah di atas akan menampilkan isi dari <code>df</code>. Namun jika jumlah barisnya banyak, maka data hanya akan ditampilkan beberapa saja. Untuk menampilkan kolom tertentu dalam suatu data tabel, kita perlu menambahkan <code>$&lt;namakolom&gt;</code> seperti contoh berikut:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">print</span>(df<span class="op">$</span>text)</a></code></pre></div>
+<p>Perintah tersebut akan menampilkan kolom <code>text</code> pada data tabel <code>df</code>.</p>
+</div>
+</div>
+<div id="pre-processing" class="section level2">
+<h2><span class="header-section-number">2.2</span> Pre-processing</h2>
+<p>Preprocessing merupakan sebuah langkah yang perlu dilakukan sebelum data siap untuk diproses atau dianalisis. Ada banyak jenis langkah preprocessing yang dapat dilakukan, namun langkah ini harus disesuaikan dengan data yang kita miliki. Pada kesempatan ini, kita akan melakukan preprocessing untuk teks yang berasal dari media sosial.</p>
+<div id="menghapus-karakter-non-ascii" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Menghapus karakter non-ASCII</h3>
+<p>Karakter teks yang digunakan di Indonesia menggunakan standar <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, namun pada banyak negara terdapat karakter-karakter yang tidak terdapat dalam standar ASCII. Pada kasus tersebut, digunakan standar yang lain, yaitu <a href="https://en.wikipedia.org/wiki/Unicode">Unicode</a> yang memiliki variasi karakter lebih banyak. ASCII pada dasarnya adalah bagian dari Unicode. Pada teks sosial media, seringkali karakter non-ASCII tertulis dan itu cukup membuat sulit dalam pengolahan teks, karena kita menggunakan ASCII. Oleh karena itu, pada langkah pertama preprocessing, kita harus menghapus karakter non-ASCII tersebut.</p>
+<p>Ciri karakter non-ASCII yang terlihat adalah adanya format seperti <code>&lt;U+...&gt;</code> pada teks yang kita miliki. Untuk menghapusnya, kita akan menggunakan perintah <code>global substitution</code> sebagai berikut:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">text &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;[&lt;].*[&gt;]&quot;</span>, <span class="st">&quot;&quot;</span>, text)</a></code></pre></div>
+<p>Perintah di atas bermakna mengganti semua teks dengan format <code>&lt;..&gt;</code> dalam variabel <code>text</code> dengan kosong, atau dengan kata lain, menghapusnya kemudian menyimpannya kembali ke dalam variabel <code>text</code>. Ini salah satu strategi dalam menghilangkan karakter non-ASCII</p>
+</div>
+<div id="menghapus-alamat-url" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Menghapus alamat URL</h3>
+<p>Sering kita temui pada teks sosial media, alamat URL sebuah website atau sejenisnya. Tentu kita tidak memerlukan alamat URL ini pada analisis selanjutnya. Untuk menghapusnya, bisa digunakan perintah:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">text &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&#39;http</span><span class="ch">\\</span><span class="st">S+</span><span class="ch">\\</span><span class="st">s*&#39;</span>,<span class="st">&quot;&quot;</span>, text)</a></code></pre></div>
+<p>Dengan menggunakan perintah tersebut, semua teks dengan format <code>http...</code> (format alamat URL) akan dihapus.
+### Menghapus tanda baca
+Tanda baca menjadi hal selanjutnya yang akan kita hapus untuk mendapatkan teks yang siap untuk dianalisis. Metode yang bisa digunakan adalah dengan memanfaatkan perintah <code>gsub</code> sama seperti sebelumnya dengan pola yang berbeda.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">text &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;[^[:alnum:][:space:]#@]&quot;</span>, <span class="st">&quot;&quot;</span>, text)</a></code></pre></div>
+<p>Penjelasan mengenai perintah tersebut
+* Tanda <code>[^ ]</code> bermakna ambil selain pola yang ada di dalam kurung siku
+* Teks <code>[:alnum:]</code> bermakna semua huruf dan angka (alfanumerik)
+* Teks <code>[:space:]</code> bermakna spasi
+* Karakter <code>#@</code> bermakna literal
+Sehingga perintah itu secara umum bermakna menghapus semua karakter selain huruf, angka, spasi, <code>#</code> dan <code>@</code>. Dua yang terakhir sengaja tidak kita hapus karena akan digunakan untuk analisis akun dan tagar pada tahap selanjutnya.</p>
+</div>
+<div id="menghapus-tanda-ganti-baris" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Menghapus tanda ganti baris</h3>
+<p>Pada teks sosial media maupun teks pada umumnya, kita akan sering menjumpai karakter <code>\n</code> yang merupakan karakter pindah baris (ada ketika kita menekan <code>enter</code> pada keyboard). Karakter ini normalnya tidak akan terlihat, namun ketika kita ambil teks dalam format ASCII, karakter ini akan diterjemahkan menjadi <code>\n</code>. Untuk menghapusnya, kita dapat menggunakan perintah berikut:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">text &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>,<span class="st">&quot; &quot;</span>,text)</a></code></pre></div>
+<p>Jika diperlukan kita bisa menggunakan cara yang sama untuk menghapus karakter sejenis lain, misalnya <code>\t</code> yang berarti <code>tab</code>. Namun karakter tersebut sangat jarang ada di sosial media twitter.</p>
+</div>
+<div id="mengubah-ke-huruf-kecil" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Mengubah ke huruf kecil</h3>
+<p>Menyeragamkan huruf kapital menjadi hal yang sangat penting dalam pengolahan teks. Hal ini dikarenakan komputer akan menganggap <code>teks</code> berbeda dari <code>Teks</code>. Oleh sebab itu, dengan perintah bawaan R, <code>tolower()</code>, kita akan membuat semua karakter ke dalam huruf kecil.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">text &lt;-<span class="st"> </span><span class="kw">tolower</span>(text)</a></code></pre></div>
+</div>
+</div>
+<div id="explorasi1" class="section level2">
+<h2><span class="header-section-number">2.3</span> Eksplorasi</h2>
+<p>Pada eksplorasi ini, kita akan mencoba mencari tahu tentang akun paling banyak disebut, tagar paling sering digunakan, serta kata yang paling sering ditulis. Namun sebelumnya satu langkah yang harus dilakukan adalah proses tokenisasi.</p>
+<div id="tokenisasi" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Tokenisasi</h3>
+<p>Tokenisasi pada dasarnya adalah proses membagi teks yang berupa kalimat atau paragraf menjadi bagian-bagian tertentu. Dalam konteks ini, kita akan membagi kumpulan kalimat ke dalam kumpulan kata-kata. Untuk melakukan tokenisasi, kita bisa menggunakan metode dari library <code>tidytext</code> yaitu <code>unnest_tokens()</code>. Contoh perintahnya adalah sebagai berikut:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">df_new &lt;-<span class="st"> </span>tidytext<span class="op">::</span><span class="kw">unnest_tokens</span>(df,word,text,<span class="dt">token=</span><span class="st">&#39;regex&#39;</span>,<span class="dt">pattern=</span><span class="st">&quot;[:space:]&quot;</span>)</a></code></pre></div>
+<p>Penjelasan dari kode tersebut adalah sebagai berikut:</p>
+<ul>
+<li><code>df_new</code> merupakan data frame tempat menyimpan hasil tokenisasi</li>
+<li><code>tidytext::unnest_tokens</code> perintah untuk memanfaatkan fungsi <code>unnest_tokens</code> yang berasal dari library <code>tidytext</code></li>
+<li><code>df</code> adalah data frame awal yang belum diproses</li>
+<li><code>word</code> adalah nama kolom yang kita buat untuk menampung hasil dari tokenisasi</li>
+<li><code>text</code> adalah nama kolom dari data frame <code>df</code> dimana berisi teks yang akan ditokenisasi</li>
+<li><code>token='regex'</code> berarti kita menggunakan metode tokenisasi dengan memanfaatkan pola <a href="https://en.wikipedia.org/wiki/Regular_expression">regex</a>. Regex merupakan sebuah pola karakter yang lazim digunakan untuk pencarian teks tertentu.</li>
+<li><code>pattern=&quot;[:space:]&quot;</code> berarti bahwa pola regex yang akan kita gunakan adalah spasi. Perintah ini juga bermakna bahwa teks akan kita pisah-pisah berdasarkan spasi, sehingga akan menghasilkan kata-kata.</li>
+</ul>
+<p>Hasil dari perintah di atas adalah sebuah data frame <code>df_new</code> dengan satu kolom bernama <code>word</code> yang berisi satu kata per baris. Contohnya dapat dilihat pada Tabel <a href="proses-ekstraksi-informasi.html#tab:table1">2.1</a>.</p>
+<table>
+<caption><span id="tab:table1">Tabel 2.1: </span>Hasil tokenisasi</caption>
+<thead>
+<tr class="header">
+<th align="left">word</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">saya</td>
+</tr>
+<tr class="even">
+<td align="left">mereka</td>
+</tr>
+<tr class="odd">
+<td align="left">makan</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="akun-paling-banyak-disebut" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Akun paling banyak disebut</h3>
+<p>Untuk mencari siapa akun-akun yang paling banyak disebut dalam menulis twit, pada dasarnya kita cukup melakukan filter dari data frame hasil tokenisasi sebelumnya, kemudian menghitung frekuensi munculnya tiap akun. Pada langkah ini, kita akan menggunakan bantuan fungsi <code>filter()</code> dari library <code>dplyr</code> dan fungsi <code>str_detect()</code> dari library <code>stringr</code>. Contoh penggunaannya dapat dilihat pada perintah berikut:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">df_akun &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(df_new,stringr<span class="op">::</span><span class="kw">str_detect</span>(word, <span class="st">&quot;@&quot;</span>))</a></code></pre></div>
+<ul>
+<li><code>dplyr::filter()</code> merupakan fungsi yang digunakan untuk melakukan filtering pada data frame sesuai dengan kondisi tertentu</li>
+<li><code>stringr::str_detect()</code> digunakan untuk mencari baris tertentu pada suatu kolom yang memiliki pola tertentu</li>
+</ul>
+<p>Perintah di atas bermakna kita hanya akan mengambil baris-baris pada data frame <code>df_new</code> kolom <code>word</code> yang mengandung karakter <code>@</code>, dengan kata lain berupa akun, kemudian hasilnya disimpan pada <code>df_akun</code>.</p>
+<p>Setelah semua akun terambil, kita dapat menghitung frekuensi masing-masing dengan mengubah data frame <code>df_akun</code> ke dalam format tabel. Secara otomatis R akan menghitung frekuensi dari masing-masing baris yang sama. Kemudian kita ubah <code>df_akun</code> kembali ke data frame untuk bisa ditampilkan dan diolah lebih lanjut.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">df_akun &lt;-<span class="st"> </span><span class="kw">table</span>(df_akun)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">df_akun &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(df_akun)</a></code></pre></div>
+<p>Selanjutnya untuk mengurutkan data berdasar frekuensi, kita dapat menggunakan fungsi <code>arrange()</code> dari library <code>dplyr</code> sebagai berikut.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">df_akun &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(df_akun,<span class="kw">desc</span>(Freq))</a></code></pre></div>
+<p>Kode di atas akan menghasilkan data frame <code>df_akun</code> yang berisi daftar akun dan frekuensinya yang telah diurutkan secara descending.</p>
+</div>
+<div id="tagar-paling-sering-digunakan" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Tagar paling sering digunakan</h3>
+<p>Untuk mencari frekuensi tagar yang digunakan, kita dapat menggunakan cara yang mirip dengan langkah mencari akun di atas. Hanya saja untuk filter yang digunakan, karakter <code>@</code> diganti dengan <code>#</code> seperti berikut.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">df_tagar &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(df_new,stringr<span class="op">::</span><span class="kw">str_detect</span>(word, <span class="st">&quot;#&quot;</span>))</a></code></pre></div>
+<p>Langkah selanjutnya sama dengan sebelumnya.</p>
+</div>
+<div id="kata-paling-sering-ditulis" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> Kata paling sering ditulis</h3>
+<p>Untuk mencari frekuensi kata selain nama akun dan tagar, kita butuh mengubah pola pencarian yang digunakan. Contoh yang bisa digunakan adalah sebagai berikut.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">df_kata &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(df_new,stringr<span class="op">::</span><span class="kw">str_detect</span>(word, <span class="st">&quot;^((?!@|#).)*$&quot;</span>))</a></code></pre></div>
+<p>Perintah di atas akan mencari kata selain yang berawalan <code>@</code> dan <code>#</code> dalam data frame <code>df_new</code> kemudian menyimpannya ke dalam data frame <code>df_kata</code>.</p>
+</div>
+</div>
+<div id="visualisasi" class="section level2">
+<h2><span class="header-section-number">2.4</span> Visualisasi</h2>
+<p>Untuk visualisasi dari data yang sudah didapat, kita dapat menggunakan bar chart. Implementasi bar chart dalam R didapat dengan memanfaatkan library <code>ggplot</code> dengan contoh kode sebagai berikut:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">head</span>(df_akun,<span class="dt">n=</span><span class="dv">10</span>),<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">reorder</span>(col_akun,Freq),<span class="dt">y=</span>Freq)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;10 akun paling banyak disebut&#39;</span>,<span class="dt">x=</span><span class="st">&#39;nama akun&#39;</span>,<span class="dt">y=</span><span class="st">&#39;jumlah&#39;</span>)</a></code></pre></div>
+<ul>
+<li><code>head(df_akun,n=10)</code> maksudnya ialah mengambil 10 baris pertama dari data frame <code>df_akun</code></li>
+<li><code>aes()</code> merupakan perintah untuk mendeskripsikan variabel mana yang akan ditampilkan dalam sumbu grafik. Perintah <code>reorder(col_akun,Freq)</code> bermakna data pada kolom <code>col_akun</code> akan diurutkan berdasarkan kolom <code>Freq</code></li>
+<li><code>geom_col()</code> merupakan perintah yang bermakna grafik yang kita buat merupakan bar chart</li>
+<li><code>coord_flip()</code> merupakan perintah untuk menukar sumbu pada grafik. Pada kasus ini, kita menggunakan perintah ini untuk membuat horizontal bar chart</li>
+<li><code>labs()</code> digunakan untuk memberi label</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pengenalan-dasar.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="latihan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-Proses.Rmd",
+"text": "Edit"
+},
+"download": ["cdc-2018.pdf", "cdc-2018.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

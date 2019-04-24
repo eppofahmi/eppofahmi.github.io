@@ -1,0 +1,13 @@
+# Contoh hasil kerja
+
+Berikut ini adalah beberapa hasil penelitian yang memanfaatkan data dari media sosial di berbagai negara dalam berbagai kasus. 
+
+```{r tableJurnal, echo=FALSE, message=FALSE, warning=FALSE}
+library(readr)
+rangkuman_jurnal <- read_delim("rangkuman jurnal.csv", 
+    ";", escape_double = FALSE)
+
+knitr::kable(rangkuman_jurnal, caption="Contoh jurnal yang memanfaatkan data dari media sosial")
+```
+
+Jika dilihat dari sumber data yang digunakan dalam penelitian-penelitian di atas (\@ref(tab:tableJurnal)), maka kita bisa mengetahui bahwa data yang digunakan cukup banyak jika dikerjakan secara manual. Selain itu, beberapa penelitian memang tidak menyebutkan jumlahnya secara spesifik, tapi umumnya mereka menggunakan data secara menyeluruh atau dengan sampel yang memadai. Oleh karena itu, mereka banyak memanfaatkan bahwa pemrogaraman dan bahkan membuat aplikasi khusus untuk mengumpulkan data seperti dengan judul "Mapping the Public Agenda with Topic Modeling: The Case of the Russian LiveJournal" [@KOL]. 
